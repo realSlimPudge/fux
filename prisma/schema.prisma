@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Модель пользователя
+model User {
+  id            String    @id @default(cuid()) // Уникальный идентификатор
+  name          String? // Опциональное имя пользователя
+  email         String    @unique // Уникальный email (для входа)
+  emailVerified DateTime? // Дата подтверждения email
+  password      String // Хэшированный пароль (для Credentials провайдера)
+  accounts      Account[] // Связь с аккаунтами (OAuth)
+  sessions      Session[] // Связь с сессиями
+  profile       Profile?
+  createdAt     DateTime  @default(now()) // Дата создания
+
+  // Для Credentials-аутентификации:
+  // @map("users") - если нужно изменить имя таблицы
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String // Связь с пользователем
+  type              String // Тип аккаунта: "oauth" или "email"
+  provider          String // Провайдер (google, github и т.д.)
+  providerAccountId String // ID пользователя у провайдера
+  refresh_token     String? // Убрал @db.Text
+  access_token      String? // Убрал @db.Text
+  expires_at        Int? // Время истечения токена
+  token_type        String? // Тип токена (Bearer)
+  scope             String? // Права доступа (scope)
+  id_token          String? // Убрал @db.Text
+  session_state     String? // Состояние сессии OAuth
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+// Модель сессий
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique // Уникальный токен сессии
+  userId       String // Связь с пользователем
+  expires      DateTime // Время истечения сессии
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Для JWT-стратегии это не используется
+}
+
+model Profile {
+  id     String  @id @default(cuid())
+  bio    String?
+  avatar String?
+  userId String  @unique
+  user   User    @relation(fields: [userId], references: [id])
+}
