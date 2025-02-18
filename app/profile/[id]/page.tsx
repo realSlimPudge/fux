@@ -33,7 +33,7 @@ export default function ProfilePage() {
         fetchProfile();
     }, [id]);
 
-    if (status === "loading") {
+    if (status === "loading" && loading) {
         return <div>Loading...</div>;
     }
 

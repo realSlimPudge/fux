@@ -20,7 +20,7 @@ export async function POST(req: Request) {
     const filename = `${session.user.id}-${Date.now()}.${extension}`;
     const buffer = Buffer.from(await file.arrayBuffer());
 
-    const { data, error } = await supabase.storage
+    const { error } = await supabase.storage
         .from("avatars")
         .upload(filename, buffer, { contentType: "image/jpeg" });
 
