@@ -1,9 +1,7 @@
 "use client";
 
-import prisma from "@/prisma/client";
 import { registerSchema } from "@/shared/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import bcrypt from "bcryptjs";
 import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 
@@ -32,7 +30,7 @@ export default function RegisterPage() {
                 email: data.email,
                 password: data.password,
                 redirect: true,
-                callbackUrl: "/social",
+                callbackUrl: "/profile/me",
             });
         } catch (error) {
             if (error.message.includes("email")) {
