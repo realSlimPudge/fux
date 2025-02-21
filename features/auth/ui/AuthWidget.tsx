@@ -1,49 +1,79 @@
-'use client'
+"use client";
 
-import { useSession } from 'next-auth/react'
-import Image from 'next/image'
-import Link from 'next/link'
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function AuthWidget() {
-	const { data: session, status } = useSession()
+    const { data: session, status } = useSession();
 
-	if (status === 'loading') {
-		return <div>Загрузка...</div>
-	}
+    if (status === "loading") {
+        return (
+            <div className="flex gap-x-2 h-[40px] items-center">
+                <div>
+                    <Link
+                        href="/register"
+                        className="px-4 py-2 bg-white  text-black rounded-xl border-[1px] border-white"
+                    >
+                        Регистрация
+                    </Link>
+                </div>
+                <div>
+                    <Link
+                        href="/login"
+                        className="border-[1px] border-gray-400 px-4 py-2 rounded-xl"
+                    >
+                        Вход
+                    </Link>
+                </div>
+            </div>
+        );
+    }
 
-	if (session && session.user) {
-		return (
-			<div className='flex w-[120px] h-[40px] justify-center items-center px-4 py-3 bg-white rounded-xl'>
-				<div className='w-[30px] h-[30px] overflow-hidden rounded-full bg-white flex items-center justify-center'>
-					<Image
-						width={30}
-						height={30}
-						alt='user'
-						src='/user-profile.svg'
-					/>
-				</div>
-				<div className='ml-10'>
-					<span className='text-black'>{session.user.name}</span>
-				</div>
-			</div>
-		)
-	}
+    if (session && session.user) {
+        return (
+            <div className=" w-fit h-[35px]  rounded-3xl  ">
+                <Link
+                    href="/profile/me"
+                    className=" flex items-center justify-center gap-x-5"
+                >
+                    <div className=" w-[35px] h-[35px] overflow-hidden rounded-full flex items-center justify-center relative bg-white">
+                        <Image
+                            alt="user"
+                            src={`${
+                                session.user.image !== null
+                                    ? session.user.image
+                                    : "/user-profile.svg"
+                            }`}
+                            className="w-full h-full top-0 left-0 object-cover "
+                            fill
+                            objectFit="cover"
+                            draggable={false}
+                        />
+                    </div>
+                </Link>
+            </div>
+        );
+    }
 
-	return (
-		<div className='flex gap-y-10'>
-			<Link
-				href='/register'
-				className='px-4 py-3 bg-white border-1 border-red-500 text-black rounded-xl'
-			>
-				Регистрация
-			</Link>
-
-			<Link
-				href='/login'
-				className='px-4 py-3  border-1 border-gray-300 rounded-xl'
-			>
-				вход
-			</Link>
-		</div>
-	)
+    return (
+        <div className="flex gap-x-2 h-[40px] items-center">
+            <div>
+                <Link
+                    href="/register"
+                    className="px-4 py-2 bg-white  text-black rounded-xl border-[1px] border-white"
+                >
+                    Регистрация
+                </Link>
+            </div>
+            <div>
+                <Link
+                    href="/login"
+                    className="border-[1px] border-gray-400 px-4 py-2 rounded-xl"
+                >
+                    Вход
+                </Link>
+            </div>
+        </div>
+    );
 }
