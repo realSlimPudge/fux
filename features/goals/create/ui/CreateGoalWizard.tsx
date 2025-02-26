@@ -17,6 +17,7 @@ import Link from 'next/link'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { goalSchema } from '@/shared/schemas/goal'
+import { redirect } from 'next/navigation'
 
 const stepsComponents: { [key: string]: React.ReactNode } = {
 	title: <TitleStep key='title' />,
@@ -50,7 +51,8 @@ export default function CreateGoalWizard() {
 			measurable: '',
 			achievable: '',
 			relevant: '',
-			timeBound: '',
+			timeBoundText: '',
+			timeBoundDate: '',
 		},
 	})
 	//сделать по красивее
@@ -69,7 +71,7 @@ export default function CreateGoalWizard() {
 		} else if (stage === 5) {
 			fieldsToValidate = ['relevant']
 		} else if (stage === 6) {
-			fieldsToValidate = ['timeBound']
+			fieldsToValidate = ['timeBoundText', 'timeBoundDate']
 		}
 		const isValid = await methods.trigger(fieldsToValidate)
 		if (isValid) {
@@ -91,9 +93,38 @@ export default function CreateGoalWizard() {
 		)
 	}
 
+	const handleSubmit = async () => {
+		const data = methods.getValues()
+		try {
+			const response = await fetch('api/goals/create', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ ...data, isPublic }),
+			})
+			if (!response.ok) {
+				throw new Error('Ошибка создания цели')
+			}
+			const result = await response.json()
+			console.log('Цель создана:', result.goal)
+		} catch (error) {
+			console.error(error)
+		} finally {
+			redirect('/profile/me')
+		}
+	}
+
 	return (
 		<FormProvider {...methods}>
-			<form>
+			<form
+				onSubmit={methods.handleSubmit(handleSubmit)}
+				onKeyDown={e => {
+					if (e.key === 'Enter') {
+						e.preventDefault()
+					}
+				}}
+			>
 				<motion.div
 					className='text-gray-950 flex flex-col gap-y-7 mt-5 max-w-[900px] min-w-[650px]'
 					initial={{ opacity: 0, y: -20 }}
@@ -151,7 +182,7 @@ export default function CreateGoalWizard() {
 										: 'Эта цель видна только вам'}
 								</button>
 								<button
-									type='button'
+									type='submit'
 									className=' shadow-md border-[1px] border-transparent rounded-2xl px-4 py-2 bg-gray-950 text-gray-50 duration-200 ease transition-all hover:shadow-lg text-xl hover:bg-gray-900 '
 								>
 									Сохранить цель

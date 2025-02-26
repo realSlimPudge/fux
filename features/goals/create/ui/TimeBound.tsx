@@ -5,13 +5,17 @@ import { useGoalState } from '../../state/store'
 import { useFormContext } from 'react-hook-form'
 
 export default function TimeBoundStep() {
-	const timeBound = useGoalState(state => state.timeBound)
+	const timeBoundText = useGoalState(state => state.timeBoundText)
+	const timeBoundDate = useGoalState(state => state.timeBoundDate)
 	const setField = useGoalState(state => state.setField)
 	const {
 		register,
 		formState: { errors },
 	} = useFormContext()
-	const { onChange: rhfOnChange, ...inputProps } = register('timeBound')
+	const { onChange: rhfOnChange, ...textInputProps } =
+		register('timeBoundText')
+	const { onChange: dateOnChange, ...dateInputProps } =
+		register('timeBoundDate')
 	return (
 		<FormAnimation>
 			<h2 className='text-lg mb-3  text-center font-semibold flex items-center justify-center gap-x-1'>
@@ -32,20 +36,37 @@ export default function TimeBoundStep() {
 				еженедельно».
 			</p>
 			<textarea
-				value={timeBound}
+				value={timeBoundText}
 				onChange={e => {
-					setField('timeBound', e.target.value)
+					setField('timeBoundText', e.target.value)
 					rhfOnChange(e)
 				}}
 				placeholder='Ограниченная во времени цель'
 				className='w-full bg-gray-100 h-56 outline-none text-2xl bg-transparent border-[1px] border-gray-300 rounded-2xl px-3 py-4
                 placeholder:font-light focus:border-gray-400 max-h-[320px] min-h-[240px]
                 '
-				{...inputProps}
+				{...textInputProps}
 			/>
-			{errors.timeBound && (
+			{errors.timeBoundText && (
+				<p className='text-red-500 text-center mt-1'>
+					{errors.timeBoundText.message as string}
+				</p>
+			)}
+			<div className='w-full flex justify-center items-center pt-2'>
+				<input
+					className='outline-none border-[1px] border-transparent py-1 px-1 rounded-2xl focus:border-gray-950'
+					type='date'
+					value={timeBoundDate}
+					onChange={e => {
+						setField('timeBoundDate', e.target.value)
+						dateOnChange(e)
+					}}
+					{...dateInputProps}
+				/>
+			</div>
+			{errors.timeBoundDate && (
 				<p className='text-red-500 text-center'>
-					{errors.timeBound.message as string}
+					{errors.timeBoundDate.message as string}
 				</p>
 			)}
 		</FormAnimation>

@@ -23,6 +23,7 @@ model User {
   accounts      Account[] // Связь с аккаунтами (OAuth)
   sessions      Session[] // Связь с сессиями
   profile       Profile?
+  goals         Goal[]
   createdAt     DateTime  @default(now()) // Дата создания
 
   // Для Credentials-аутентификации:
@@ -65,4 +66,19 @@ model Profile {
   avatar String?
   userId String  @unique
   user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Goal {
+  id      String @id @default(cuid())
+  title   String
+  description   String
+  specific    String
+  measurable  String
+  achievable    String
+  relevant    String
+  timeBoundText   String
+  timeBoundDate   String
+  userId    String 
+  isPublic Boolean @default(true)
+  user  User @relation(fields: [userId],references: [id],onDelete: Cascade)
 }

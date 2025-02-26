@@ -12,5 +12,21 @@ export const goalSchema = z.object({
 	measurable: z.string().min(3, 'Опишите, как измерить успех'),
 	achievable: z.string().min(3, 'Укажите, как цель достижима'),
 	relevant: z.string().min(3, 'Объясните актуальность цели'),
-	timeBound: z.string().nonempty('Укажите срок достижения цели'),
+	timeBoundText: z
+		.string()
+		.min(2, 'Введите срок цели в текстовом формате')
+		.max(50, 'Слишком длинное описание'),
+	timeBoundDate: z
+		.string()
+		.nonempty('Укажите дату достижения цели')
+		.refine(
+			value => {
+				const inputDate = new Date(value)
+				const today = new Date()
+				today.setHours(0, 0, 0, 0)
+				return inputDate >= today
+			},
+			{ message: 'Дата не может быть меньше текущей' }
+		),
+	isPublic: z.boolean().default(true),
 })
