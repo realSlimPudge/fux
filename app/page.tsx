@@ -3,7 +3,7 @@ import SmartWidget from "@/shared/SmartWidget";
 import { motion } from "framer-motion";
 export default function Home() {
     return (
-        <div className="h-screen mb-[1000px] bg-gray-50 flex items-center">
+        <div className="h-screen mb-[1000px] bg-gray-50 mainBg flex items-center">
             <section className="mx-auto w-[75%] flex justify-between items-center">
                 <motion.div
                     initial={{ opacity: 0 }}

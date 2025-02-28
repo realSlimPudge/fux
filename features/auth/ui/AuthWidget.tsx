@@ -1,5 +1,6 @@
 "use client";
 
+import { Skeleton } from "@mui/material";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,34 +11,25 @@ export default function AuthWidget() {
     if (status === "loading") {
         return (
             <div className="flex gap-x-2 h-[40px] items-center">
-                <div>
-                    <Link
-                        href="/register"
-                        className="px-4 py-2 bg-white  text-black rounded-xl border-[1px] border-white"
-                    >
-                        Регистрация
-                    </Link>
-                </div>
-                <div>
-                    <Link
-                        href="/login"
-                        className="border-[1px] border-gray-400 px-4 py-2 rounded-xl"
-                    >
-                        Вход
-                    </Link>
-                </div>
+                <Skeleton
+                    variant="circular"
+                    width={35}
+                    height={35}
+                    sx={{ bgcolor: "#d1d5db" }}
+                    animation={"pulse"}
+                />
             </div>
         );
     }
 
-    if (session && session.user) {
+    if (status === "authenticated") {
         return (
             <div className=" w-fit h-[35px]  rounded-3xl  ">
                 <Link
                     href="/profile/me"
                     className=" flex items-center justify-center gap-x-5"
                 >
-                    <div className=" w-[35px] h-[35px] overflow-hidden rounded-full flex items-center justify-center relative bg-white">
+                    <div className=" w-[35px] h-[35px] overflow-hidden rounded-full flex items-center justify-center relative ">
                         <Image
                             alt="user"
                             src={`${

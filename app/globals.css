@@ -2,6 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+.social-bg {
+    background-image: url(/social-bg.svg);
+    background-size: 100%;
+}
+
+.mainBg {
+    background-image: url(/mainBg2.svg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.corner1:after {
+    content: "";
+    position: fixed;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    top: 90%;
+    left: 98%;
+    width: 800px;
+    height: 800px;
+    background-image: url(/corner1.svg);
+    /* background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: 100% -1000%; */
+}
+
 .active {
     position: relative;
     color: white;
@@ -72,3 +97,7 @@
     background-color: #d1d5db;
     transition: all 300ms ease;
 }
+
+/* .MuiSkeleton-wave {
+    background-color: #f9fafb;
+} */

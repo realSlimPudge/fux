@@ -1,3 +1,5 @@
+import PageLoader from "@/shared/loading/PageLoader";
+
 export default function About() {
-    return <div>О нас</div>;
+    return <PageLoader />;
 }
