@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import Credentials from "next-auth/providers/credentials";
 import { loginSchema } from "../schemas/auth";
@@ -7,7 +7,7 @@ import bcrypt from "bcryptjs";
 
 //Конфигурация NextAuth
 
-export const authOptions = {
+export const authOptions: AuthOptions = {
     adapter: PrismaAdapter(prisma),
     providers: [
         Credentials({
@@ -50,17 +50,18 @@ export const authOptions = {
         },
         async session({ session, token }) {
             const dbUser = await prisma.user.findUnique({
-                where: { id: token.id },
+                where: { id: token.id as string },
             });
             const dbProfile = await prisma.profile.findUnique({
-                where: { userId: token.id },
+                where: { userId: token.id as string },
             });
             if (!dbUser) {
-                return { ...session, user: null };
+                session.user = { id: "", name: null, email: null, image: null };
+            } else {
+                session.user.id = dbUser.id;
+                session.user.name = dbUser.name;
+                session.user.image = dbProfile?.avatar;
             }
-            session.user.id = dbUser.id;
-            session.user.name = dbUser.name;
-            session.user.image = dbProfile?.avatar;
             return session;
         },
     },
@@ -69,3 +70,4 @@ export const authOptions = {
 const authHandler = NextAuth(authOptions);
 
 export default authHandler;
+export { authHandler as auth };

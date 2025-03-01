@@ -15,8 +15,8 @@ export default function LoginPage() {
         e.preventDefault();
         setError("");
 
-        const result = signIn("credentials", {
-            redirect: true,
+        const result = await signIn("credentials", {
+            redirect: false,
             email,
             password,
             callbackUrl: "/social",

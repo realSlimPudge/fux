@@ -31,6 +31,18 @@ const stepsComponents: { [key: string]: React.ReactNode } = {
     preview: <PreviewStep key="preview" />,
 };
 
+type FormFields = {
+    title: string;
+    description: string;
+    specific: string;
+    measurable: string;
+    achievable: string;
+    relevant: string;
+    timeBoundText: string;
+    timeBoundDate: string;
+    isPublic: boolean;
+};
+
 export default function CreateGoalWizard() {
     const stage = useGoalState((state) => state.stage);
     const stages = useGoalState((state) => state.stages);
@@ -43,7 +55,7 @@ export default function CreateGoalWizard() {
 
     const currentStepName = stages[stage];
 
-    const methods = useForm({
+    const methods = useForm<FormFields>({
         resolver: zodResolver(goalSchema),
         defaultValues: {
             title: "",
@@ -54,11 +66,12 @@ export default function CreateGoalWizard() {
             relevant: "",
             timeBoundText: "",
             timeBoundDate: "",
+            isPublic: false,
         },
     });
-    //сделать по красивее
+
     const validateStep = async () => {
-        let fieldsToValidate: string[] = [];
+        let fieldsToValidate: (keyof FormFields)[] = [];
         if (stage === 0) {
             fieldsToValidate = ["title"];
         } else if (stage === 1) {

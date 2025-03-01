@@ -1,13 +1,16 @@
 import prisma from "@/prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/shared/lib/auth";
+import { NextRequest } from "next/server";
 
 export async function GET(
-    req: Request,
-    { params }: { params: { id: string } }
-) {
-    const session = await getServerSession(authOptions);
+    req: NextRequest,
+    context: unknown
+): Promise<Response> {
+    const { params } = context as { params: { id: string } };
     const { id } = params;
+
+    const session = await getServerSession(authOptions);
 
     if (!id) {
         return new Response(JSON.stringify({ error: "ID не указан" }), {
@@ -16,7 +19,7 @@ export async function GET(
     }
 
     // Если запрос к "/profile/me", подставляем ID текущего юзера
-    const userId = id === "me" ? session?.user?.id : id;
+    const userId = id === "me" ? session?.user?.id ?? null : id;
 
     if (!userId) {
         return new Response(JSON.stringify({ error: "Не авторизован" }), {

@@ -2,13 +2,14 @@
 
 import LogoutBtn from "@/shared/Logout";
 import ProfileCardSkeleton from "@/shared/skeletons/ProfileCardSkeleton";
+import { User } from "@/shared/types/user";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function ProfileCard() {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>("");
 
@@ -28,7 +29,11 @@ export default function ProfileCard() {
                 }
                 setUser(data);
             } catch (err) {
-                setError(err.message);
+                if (err instanceof Error) {
+                    setError(err.message);
+                } else {
+                    setError("An unknown error occurred");
+                }
             } finally {
                 setLoading(false);
             }
@@ -62,13 +67,15 @@ export default function ProfileCard() {
                 body: formData,
             });
             const data = await res.json();
-            console.log(data);
             if (!res.ok) throw new Error(data.error);
 
-            setUser((prev) => ({
-                ...prev,
-                profile: { ...prev.profile, avatar: data.avatarUrl },
-            }));
+            setUser((prev) => {
+                if (!prev) return prev;
+                return {
+                    ...prev,
+                    profile: { ...prev.profile, avatar: data.avatarUrl },
+                };
+            });
         } catch (err) {
             console.error("Ошибка загрузки аватара", err);
         } finally {
@@ -134,7 +141,9 @@ export default function ProfileCard() {
                             Дата регистрации:
                         </span>{" "}
                         <span className="text-gray-900 text-lg font-medium">
-                            {new Date(user?.createdAt).toLocaleDateString()}
+                            {user?.createdAt
+                                ? new Date(user.createdAt).toLocaleDateString()
+                                : "Неизвестно"}
                         </span>
                     </p>
                 </div>

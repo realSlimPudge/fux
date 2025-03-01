@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     const session = await getServerSession(authOptions);
-    if (!session?.user) {
+    if (!session?.user || !session.user.id) {
         return NextResponse.json({ error: "Не авторизован" }, { status: 401 });
     }
     const userId = session.user.id;
@@ -33,6 +33,9 @@ export async function POST(req: Request) {
         return NextResponse.json({ goal: newGoal }, { status: 201 });
     } catch (e) {
         console.error(e);
-        return NextResponse.json({ error: e.message }, { status: 400 });
+        if (e instanceof Error) {
+            return NextResponse.json({ error: e.message }, { status: 400 });
+        }
+        return NextResponse.json({ error: "Unknown error" }, { status: 400 });
     }
 }
