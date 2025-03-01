@@ -53,7 +53,7 @@ export default function AuthWidget() {
             <div>
                 <Link
                     href="/register"
-                    className="px-4 py-2 bg-white  text-black rounded-xl border-[1px] border-white"
+                    className="px-4 py-2 bg-gray-950  text-gray-50 rounded-xl "
                 >
                     Регистрация
                 </Link>
@@ -61,7 +61,7 @@ export default function AuthWidget() {
             <div>
                 <Link
                     href="/login"
-                    className="border-[1px] border-gray-400 px-4 py-2 rounded-xl"
+                    className="border-[1px] border-gray-500 px-4 py-2 rounded-xl text-gray-950 bg-gray-100 hover:bg-gray-200 "
                 >
                     Вход
                 </Link>

@@ -7,12 +7,12 @@ export default function NavBar() {
     const pathname = usePathname();
 
     return (
-        <nav className="w-full flex justify-between items-center text-gray-400 h-full">
+        <nav className="w-full flex justify-between items-center text-gray-950 h-full">
             <Link
                 href="/"
                 className={`${
                     pathname === "/" ? "active" : ""
-                } transition-all ease duration-200 hover:text-gray-50 h-full flex items-center`}
+                } transition-all ease duration-200  h-full flex items-center rounded-lg px-2 border-transparent border-[1px] hover:border-gray-700`}
             >
                 Главная
             </Link>
@@ -20,7 +20,7 @@ export default function NavBar() {
                 href="/about"
                 className={`${
                     pathname === "/about" ? "active" : ""
-                } transition-all ease duration-200 hover:text-gray-50 h-full flex items-center`}
+                } transition-all ease duration-200  h-full flex items-center rounded-lg px-2 border-transparent border-[1px] hover:border-gray-700`}
             >
                 О нас
             </Link>
@@ -28,7 +28,7 @@ export default function NavBar() {
                 href="/social"
                 className={`${
                     pathname === "/social" ? "active" : ""
-                } transition-all ease duration-200 hover:text-gray-50 h-full flex items-center`}
+                } transition-all ease duration-200  h-full flex items-center rounded-lg px-2 border-transparent border-[1px] hover:border-gray-700`}
             >
                 Цели
             </Link>
@@ -36,7 +36,7 @@ export default function NavBar() {
                 href="/create"
                 className={`${
                     pathname === "/create" ? "active" : ""
-                } transition-all ease duration-200 hover:text-gray-50 h-full flex items-center`}
+                } transition-all ease duration-200  h-full flex items-center rounded-lg px-2 border-transparent border-[1px] hover:border-gray-700`}
             >
                 Создать цель
             </Link>

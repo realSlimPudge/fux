@@ -47,7 +47,7 @@ export default function SmartWidget({
             <div
                 className="h-full rounded-2xl border-2 border-gray-500 absolute transform left-0 z-0 w-[210%] opacity-0
                         transition-all ease-in-out duration-500 translate-x-[-50%] group-hover:translate-x-[-94%] group-hover:opacity-100
-                        text-lg text-black rounded-tr-none rounded-br-none border-r-0 shadow-lg px-3"
+                        text-lg text-black rounded-tr-none rounded-br-none border-r-0 shadow-lg px-3 backdrop-blur-sm"
             >
                 <h3 className="text-center mt-2 text-sm px-2">{minititle}</h3>
                 <p className="text-xs font-light text-center px-2 pr-3">

@@ -111,8 +111,6 @@ export default function CreateGoalWizard() {
             if (!response.ok) {
                 throw new Error("Ошибка создания цели");
             }
-            const result = await response.json();
-            console.log("Цель создана:", result.goal);
         } catch (error) {
             console.error(error);
         } finally {

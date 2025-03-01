@@ -17,7 +17,7 @@ export default function Home() {
                             FUX
                         </span>
                     </h1>
-                    <h2 className="text-4xl mt-8">
+                    <h2 className="text-4xl mt-8 font-light">
                         Создавайте SMART-цели, отслеживайте прогресс и <br />
                         делитесь успехами с сообществом.
                     </h2>

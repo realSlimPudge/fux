@@ -5,13 +5,15 @@ import NavBar from "@/widgets/NavBar";
 export default function Header() {
     return (
         <header
-            className="bg-gray-950 bg-opacity-0 backdrop-blur-lg flex justify-between items-center border-gray-700 border-[1px] rounded-full w-[70%]  mx-auto py-3 px-6 mt-5
+            className="bg-gray-400 bg-opacity-10 backdrop-blur-lg flex justify-between items-center border-gray-400 border-[1px] rounded-full w-[70%]  mx-auto py-3 px-6 mt-5
 		transition-all ease-in duration-600  hover:border-gray-500 fixed left-[50%] transform translate-x-[-50%] z-20 
 		"
         >
             <div className="w-[10%] ">
                 <Link href="/">
-                    <h1 className="font-extrabold text-4xl">FUX</h1>
+                    <h1 className="font-extrabold text-4xl text-gray-950">
+                        FUX
+                    </h1>
                 </Link>
             </div>
 

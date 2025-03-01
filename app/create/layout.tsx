@@ -1,3 +1,5 @@
+import Corner from "@/shared/svgs/Corner";
+
 export default function CreateLayout({
     children,
 }: {
@@ -6,6 +8,7 @@ export default function CreateLayout({
     return (
         <section className="bg-gray-100 text-white w-screen h-screen relative overflow-hidden corner1 ">
             {children}
+            <Corner />
         </section>
     );
 }
