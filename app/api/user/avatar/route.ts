@@ -4,6 +4,8 @@ import { supabase } from "@/shared/lib/supabase";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
+//добавить проверку веса изображения
+
 export async function POST(req: Request) {
     const session = await getServerSession(authOptions);
     if (!session)
