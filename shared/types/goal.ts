@@ -1,5 +1,6 @@
 type Goal = {
     id: string;
+    isLiked: boolean;
     title: string;
     description: string;
     specific: string;
@@ -15,6 +16,9 @@ type Goal = {
         profile: {
             avatar: string;
         };
+    };
+    _count: {
+        likes: number;
     };
 };
 

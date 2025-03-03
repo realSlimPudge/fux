@@ -1,9 +1,14 @@
 import prisma from "@/prisma/client";
+import { authOptions } from "@/shared/lib/auth";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 //Добавить в модель дату создание
 
 export async function GET(request: Request) {
+    const session = await getServerSession(authOptions);
+    const userId = session?.user?.id;
+
     const { searchParams } = new URL(request.url);
     const page = Number(searchParams.get("page")) || 1;
     const perPage = Number(searchParams.get("perPage")) || 5;
@@ -14,7 +19,7 @@ export async function GET(request: Request) {
             where: { isPublic: true },
             skip,
             take: perPage,
-            //orderBy:{createdAt:'desc'}
+            orderBy: { createdAt: "desc" },
             select: {
                 id: true,
                 title: true,
@@ -37,11 +42,31 @@ export async function GET(request: Request) {
                         },
                     },
                 },
+                _count: {
+                    select: { likes: true },
+                },
+                likes: userId
+                    ? {
+                          where: { userId },
+                          select: { id: true },
+                      }
+                    : false,
             },
         }),
         prisma.goal.count({
             where: { isPublic: true },
         }),
     ]);
-    return NextResponse.json({ goals, total, page, perPage });
+
+    const goalsWithLikeStatus = goals.map((goal) => ({
+        ...goal,
+        isLiked: goal.likes?.length > 0,
+    }));
+
+    return NextResponse.json({
+        goals: goalsWithLikeStatus,
+        total,
+        page,
+        perPage,
+    });
 }

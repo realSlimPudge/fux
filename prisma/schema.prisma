@@ -25,6 +25,7 @@ model User {
   sessions      Session[] // Связь с сессиями
   profile       Profile?
   goals         Goal[]
+  likes         Like[]
   createdAt     DateTime  @default(now()) // Дата создания
 
   // Для Credentials-аутентификации:
@@ -70,16 +71,29 @@ model Profile {
 }
 
 model Goal {
-  id      String @id @default(cuid())
-  title   String
-  description   String
-  specific    String
-  measurable  String
-  achievable    String
-  relevant    String
+  id              String @id @default(cuid())
+  title           String
+  description     String
+  specific        String
+  measurable      String
+  achievable      String
+  relevant        String
   timeBoundText   String
   timeBoundDate   String
-  userId    String 
-  isPublic Boolean @default(true)
-  user  User @relation(fields: [userId],references: [id],onDelete: Cascade)
+  userId          String 
+  isPublic        Boolean @default(true)
+  createdAt       DateTime @default(now())
+  likes           Like[]
+  user            User @relation(fields: [userId],references: [id],onDelete: Cascade)
+}
+
+model Like {
+  id            String @id @default(cuid())
+  userId        String
+  goalId        String
+  user          User @relation(fields: [userId],references: [id],onDelete: Cascade)
+  goal          Goal @relation(fields: [goalId],references: [id],onDelete: Cascade)
+  createdAt     DateTime @default(now())
+
+  @@unique([userId,goalId])
 }

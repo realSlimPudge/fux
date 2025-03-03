@@ -53,7 +53,7 @@ export default function AuthWidget() {
             <div>
                 <Link
                     href="/register"
-                    className="px-4 py-2 bg-gray-950  text-gray-50 rounded-xl "
+                    className="border-[1px] border-transparent px-4 py-2 bg-gray-950  text-gray-50 rounded-xl "
                 >
                     Регистрация
                 </Link>

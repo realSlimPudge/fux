@@ -1,6 +1,8 @@
 import { Goal } from "@/shared/types/goal";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import LikeButton from "@/features/like/ui/LikeButton";
 
 interface GoalCardProps {
     goal: Goal;
@@ -8,7 +10,11 @@ interface GoalCardProps {
 
 export default function GoalCard({ goal }: GoalCardProps) {
     return (
-        <li className="w-full bg-gray-50 rounded-2xl p-4 shadow-lg border-[1px] border-gray-300">
+        <motion.li
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="w-full bg-gray-50 rounded-2xl p-4 shadow-lg border-[1px] border-gray-300"
+        >
             <div className="mb-4 text-gray-950 flex justify-between items-center">
                 <div>
                     <h1 className="text-xl font-bold">
@@ -61,11 +67,12 @@ export default function GoalCard({ goal }: GoalCardProps) {
                     </p>
                 </div>
             </div>
-            <div className="mt-3">
+            <div className="mt-3 flex items-center justify-between">
+                <LikeButton goal={goal} />
                 <p className="font-medium text-base text-end text-gray-700">
                     До: {goal.timeBoundDate}
                 </p>
             </div>
-        </li>
+        </motion.li>
     );
 }

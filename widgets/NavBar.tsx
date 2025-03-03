@@ -7,12 +7,12 @@ export default function NavBar() {
     const pathname = usePathname();
 
     return (
-        <nav className="w-full flex justify-between items-center text-gray-950 h-full">
+        <nav className="w-full flex justify-between items-center h-full text-gray-950">
             <Link
                 href="/"
                 className={`${
                     pathname === "/" ? "active" : ""
-                } transition-all ease duration-200  h-full flex items-center rounded-lg px-2 border-transparent border-[1px] hover:border-gray-700`}
+                }  transition-all ease duration-200  h-full flex items-center rounded-lg px-2 border-transparent border-[1px] hover:border-gray-700`}
             >
                 Главная
             </Link>
