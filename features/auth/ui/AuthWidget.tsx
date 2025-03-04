@@ -26,7 +26,7 @@ export default function AuthWidget() {
         return (
             <div className=" w-fit h-[35px]  rounded-3xl  ">
                 <Link
-                    href="/profile/me"
+                    href={`/profile/${session.user.id}`}
                     className=" flex items-center justify-center gap-x-5"
                 >
                     <div className=" w-[35px] h-[35px] overflow-hidden rounded-full flex items-center justify-center relative ">

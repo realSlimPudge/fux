@@ -1,7 +1,7 @@
+import ProfileGoalsList from "@/features/goals/list/ProfileGoalsList";
 import PageContainer from "@/shared/PageContainer";
 import ProfileCard from "@/widgets/ProfileCard";
 
-//вынести карточку профиля в отдельный компонент
 //удалять старую аватарку из supabase
 
 export default function ProfilePage() {
@@ -12,7 +12,9 @@ export default function ProfilePage() {
                     <ProfileCard />
                 </div>
 
-                <div className="bg-gray-950 w-full">asdf</div>
+                <div>
+                    <ProfileGoalsList />
+                </div>
             </div>
         </PageContainer>
     );

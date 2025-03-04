@@ -3,32 +3,31 @@ import GoalCard from "@/entities/goal/GoalCard";
 import GoalCardSkeleton from "@/shared/skeletons/GoalCardSkeleton";
 import { Goal } from "@/shared/types/goal";
 import { useEffect, useState } from "react";
+import useSWR from "swr";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Social() {
     const [goals, setGoals] = useState<Goal[]>([]);
     const [total, setTotal] = useState<number>(0);
     const [page, setPage] = useState<number>(1);
-    const [loading, setLoading] = useState<boolean>(false);
     const perPage = 5;
 
-    useEffect(() => {
-        async function fetchGoals() {
-            try {
-                setLoading(true);
-                const res = await fetch(
-                    `api/goals/public?page=${page}&perPage=${perPage}`
-                );
-                const data = await res.json();
-                setGoals(data.goals);
-                setTotal(data.total);
-            } catch (error) {
-                console.error("Ошибка при получении целей: ", error);
-            } finally {
-                setLoading(false);
-            }
+    const { data, isLoading } = useSWR(
+        `/api/goals/public?page=${page}&perPage=${perPage}`,
+        fetcher,
+        {
+            refreshInterval: 5000,
         }
-        fetchGoals();
-    }, [page]);
+    );
+
+    useEffect(() => {
+        if (data) {
+            setGoals(data.goals);
+            setTotal(data.total);
+        }
+    }, [data]);
+
     const totalPages = Math.ceil(total / perPage);
     return (
         <>
@@ -38,7 +37,7 @@ export default function Social() {
                         Публичные цели
                     </h1>
                     <ul className="space-y-10">
-                        {loading
+                        {isLoading
                             ? Array(perPage)
                                   .fill(0)
                                   .map((_, i) => <GoalCardSkeleton key={i} />)
