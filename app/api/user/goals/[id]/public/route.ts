@@ -1,12 +1,8 @@
 import prisma from "@/prisma/client";
-import { authOptions } from "@/shared/lib/auth";
-import { getServerSession } from "next-auth";
 
-export async function GET(
-    req: Request,
-    { params }: { params: { id: string } }
-): Promise<Response> {
-    const { id } = await params;
+export async function GET(req: Request, context: unknown): Promise<Response> {
+    const { params } = context as { params: { id: string } };
+    const { id } = params;
     // const session = await getServerSession(authOptions);
     // const userId = session?.user?.id;
 
