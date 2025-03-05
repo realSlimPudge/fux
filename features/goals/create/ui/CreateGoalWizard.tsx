@@ -134,6 +134,7 @@ export default function CreateGoalWizard() {
     return (
         <FormProvider {...methods}>
             <form
+                className="z-10"
                 onSubmit={methods.handleSubmit(handleSubmit)}
                 onKeyDown={(e) => {
                     if (e.key === "Enter") {

@@ -10,7 +10,7 @@ export default function Corner() {
     }, []);
 
     return (
-        <div className="absolute translate-x-[-50%] translate-y-[-50%] top-[90%] left-[96%] w-[800px] h-[800px] -rotate-45">
+        <div className="absolute translate-x-[-50%] translate-y-[-50%] top-[90%] left-[96%] w-[800px] h-[800px] -rotate-45 z-0">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="prefix__solo2 w-full h-full corner-animate"
