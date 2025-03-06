@@ -1,149 +1,202 @@
-'use client'
+"use client";
 
-import LogoutBtn from '@/shared/Logout'
-import ProfileCardSkeleton from '@/shared/skeletons/ProfileCardSkeleton'
-import { User } from '@/shared/types/user'
-import { useSession } from 'next-auth/react'
-import Image from 'next/image'
-import { useParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import useSWR from 'swr'
+import LogoutBtn from "@/shared/Logout";
+import ProfileCardSkeleton from "@/shared/skeletons/ProfileCardSkeleton";
+import { User } from "@/shared/types/user";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import useSWR from "swr";
+import { motion } from "framer-motion";
 
-const fetcher = (url: string) => fetch(url).then(res => res.json())
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function ProfileCard() {
-	const [user, setUser] = useState<User | null>(null)
+    const { id } = useParams();
+    const { data: session } = useSession();
 
-	const [uploading, setUploading] = useState<boolean>(false)
+    const [user, setUser] = useState<User | null>(null);
+    const [uploading, setUploading] = useState<boolean>(false);
+    const [editing, setEditing] = useState<boolean>(false);
 
-	const { id } = useParams()
-	const { data: session } = useSession()
+    const { data, isLoading } = useSWR(`/api/user/profile/${id}`, fetcher, {
+        refreshInterval: 5000,
+    });
 
-	const { data, isLoading } = useSWR(`/api/user/profile/${id}`, fetcher, {
-		refreshInterval: 5000,
-	})
+    useEffect(() => {
+        if (data) {
+            setUser(data);
+        }
+    }, [data]);
 
-	useEffect(() => {
-		if (data) {
-			setUser(data)
-		}
-	}, [data])
+    if (isLoading) {
+        return <ProfileCardSkeleton />;
+    }
 
-	if (isLoading) {
-		return <ProfileCardSkeleton />
-	}
+    // if (error) {
+    // 	return <div>Произошла ошибка: {error}</div>
+    // }
 
-	// if (error) {
-	// 	return <div>Произошла ошибка: {error}</div>
-	// }
+    const isMyProfile = session?.user?.id === user?.id;
 
-	const isMyProfile = session?.user?.id === user?.id
+    const handleAvatarUpload = async (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        if (!event.target.files?.[0]) return;
 
-	const handleAvatarUpload = async (
-		event: React.ChangeEvent<HTMLInputElement>
-	) => {
-		if (!event.target.files?.[0]) return
+        const file = event.target.files[0];
+        const formData = new FormData();
+        formData.append("avatar", file);
 
-		const file = event.target.files[0]
-		const formData = new FormData()
-		formData.append('avatar', file)
+        setUploading(true);
+        try {
+            const res = await fetch("/api/user/avatar", {
+                method: "POST",
+                body: formData,
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error);
 
-		setUploading(true)
-		try {
-			const res = await fetch('/api/user/avatar', {
-				method: 'POST',
-				body: formData,
-			})
-			const data = await res.json()
-			if (!res.ok) throw new Error(data.error)
+            setUser((prev) => {
+                if (!prev) return prev;
+                return {
+                    ...prev,
+                    profile: { ...prev.profile, avatar: data.avatarUrl },
+                };
+            });
+        } catch (err) {
+            console.error("Ошибка загрузки аватара", err);
+        } finally {
+            setUploading(false);
+        }
+    };
 
-			setUser(prev => {
-				if (!prev) return prev
-				return {
-					...prev,
-					profile: { ...prev.profile, avatar: data.avatarUrl },
-				}
-			})
-		} catch (err) {
-			console.error('Ошибка загрузки аватара', err)
-		} finally {
-			setUploading(false)
-		}
-	}
-
-	return (
-		<div className='w-full bg-gray-50 py-6 px-8 rounded-2xl h-full shadow-md text-gray-950 border-[1px] border-gray-300'>
-			<div>
-				<p className='text-4xl text-end font-bold text-gray-900'>
-					{user?.name}
-				</p>
-			</div>
-			<div className='relative group'>
-				{isMyProfile && (
-					<label className='absolute right-[5%] top-[5%] z-10 cursor-pointer '>
-						<input
-							type='file'
-							accept='image/*'
-							className='hidden'
-							onChange={handleAvatarUpload}
-							disabled={uploading}
-						/>
-						<div
-							className='w-[60px] h-[60px] flex justify-center items-center rounded-full bg-gray-950 
+    return (
+        <>
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="w-full h-fit py-6 px-8 rounded-2xl flex flex-col justify-between
+			shadow-sm text-gray-950 border-[1px] border-gray-300 bg-gray-50"
+            >
+                <div>
+                    <p className="text-4xl text-end font-bold text-gray-900">
+                        {user?.name}
+                    </p>
+                </div>
+                <div className="relative group">
+                    {isMyProfile && (
+                        <label className="absolute right-[5%] top-[5%] z-10 cursor-pointer ">
+                            <input
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                onChange={handleAvatarUpload}
+                                disabled={uploading}
+                            />
+                            <div
+                                className="w-[60px] h-[60px] flex justify-center items-center rounded-full bg-gray-950 
                         transition-all ease duration-200 opacity-0 group-hover:opacity-100 hover:bg-gray-800
-                       '
-						>
-							<Image
-								src='/change-avatar.svg'
-								width={40}
-								height={40}
-								alt='Изменить'
-							></Image>
-						</div>
-					</label>
-				)}
+                       "
+                            >
+                                <Image
+                                    src="/change-avatar.svg"
+                                    width={40}
+                                    height={40}
+                                    alt="Изменить"
+                                ></Image>
+                            </div>
+                        </label>
+                    )}
 
-				<div className='overflow-hidden rounded-full w-80 h-80 bg-gray-800 relative my-8 group z-2  border-2 border-gray-300 '>
-					<Image
-						//подлючить аватар из бд
-						src={user?.profile.avatar || '/user-profile.svg'}
-						alt='user'
-						className='w-full h-full top-0 left-0 object-cover '
-						fill
-						objectFit='cover'
-						draggable={false}
-					/>
-				</div>
-			</div>
-
-			<div className='flex flex-col gap-y-5'>
-				<div className='mb-20'>
-					<span className='text-gray-700 text-2xl font-light'>
-						Обо мне:
-					</span>
-					<p>{user?.profile.bio}</p>
-				</div>
-				<div>
-					<p className='flex justify-between items-center'>
-						<span className='text-gray-700 text-xl font-light'>
-							Дата регистрации:
-						</span>{' '}
-						<span className='text-gray-900 text-lg font-medium'>
-							{user?.createdAt
-								? new Date(user.createdAt).toLocaleDateString()
-								: 'Неизвестно'}
-						</span>
-					</p>
-				</div>
-				{isMyProfile && (
-					<div>
-						<p>
-							Ваш email: <span>{user?.email}</span>
-						</p>
-						<LogoutBtn />
-					</div>
-				)}
-			</div>
-		</div>
-	)
+                    <div className="overflow-hidden rounded-full w-80 h-80 bg-gray-800 relative my-8 group z-2  border-2 border-gray-300 ">
+                        <Image
+                            //подлючить аватар из бд
+                            src={user?.profile.avatar || "/user-profile.svg"}
+                            alt="user"
+                            className="w-full h-full top-0 left-0 object-cover "
+                            fill
+                            objectFit="cover"
+                            draggable={false}
+                        />
+                    </div>
+                </div>
+                <div className="flex flex-col gap-y-5">
+                    <div className="flex flex-col">
+                        <div className="flex justify-between items-center">
+                            <h4 className="text-gray-700 text-2xl font-light ">
+                                Обо мне:
+                            </h4>
+                            {isMyProfile && (
+                                <button
+                                    className="text-gray-400 text-sm hover:underline"
+                                    onClick={() => {
+                                        setEditing(!editing);
+                                    }}
+                                >
+                                    {editing ? "Сохранить" : "Редактировать"}
+                                </button>
+                            )}
+                        </div>
+                        <div className="h-full">
+                            {editing ? (
+                                <motion.textarea
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    placeholder={user?.profile.bio}
+                                    maxLength={100}
+                                    className=" w-full h-[120px] outline-none rounded-md bg-gray-100 border-[1px]
+							 border-gray-300 focus:border-gray-400 px-2 resize-none text-lg text-gray-700"
+                                ></motion.textarea>
+                            ) : (
+                                <motion.p
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    className="text-lg text-gray-700"
+                                >
+                                    {user?.profile.bio}
+                                </motion.p>
+                            )}
+                        </div>
+                    </div>
+                    <div>
+                        <p className="flex justify-between items-center">
+                            <span className="text-gray-700 text-xl font-light ">
+                                Дата регистрации:
+                            </span>{" "}
+                            <span className="text-gray-900 text-lg font-medium">
+                                {user?.createdAt
+                                    ? new Date(
+                                          user.createdAt
+                                      ).toLocaleDateString()
+                                    : "Неизвестно"}
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </motion.div>
+            {isMyProfile && (
+                <div className="mt-4 space-y-4">
+                    <motion.div
+                        initial={{ x: -25, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 0.1 }}
+                        className="shadow-sm text-gray-700 border-[1px] border-gray-300 text-lg font-light bg-gray-50 rounded-2xl p-4 pl-6 flex justify-between"
+                    >
+                        Ваш email:{" "}
+                        <span className="text-end">{user?.email}</span>
+                    </motion.div>
+                    <motion.div
+                        initial={{ x: -25, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 0.2 }}
+                        className="text-center"
+                    >
+                        <LogoutBtn />
+                    </motion.div>
+                </div>
+            )}
+        </>
+    );
 }

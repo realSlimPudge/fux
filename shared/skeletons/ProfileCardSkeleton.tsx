@@ -1,9 +1,14 @@
 import { Skeleton } from "@mui/material";
+import { motion } from "framer-motion";
 
 export default function ProfileCardSkeleton() {
     const skeletonBgColor: string = "#d1d5db";
     return (
-        <div className="bg-gray-50 py-6 px-8 rounded-2xl h-full shadow-sm">
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="bg-gray-50 py-6 px-8 rounded-2xl h-full shadow-sm border-[1px] border-gray-300"
+        >
             <div className="flex justify-end">
                 <Skeleton
                     variant="text"
@@ -72,6 +77,6 @@ export default function ProfileCardSkeleton() {
                     />
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 }
