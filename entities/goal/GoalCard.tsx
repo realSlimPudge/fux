@@ -15,12 +15,9 @@ export default function GoalCard({ goal }: GoalCardProps) {
             animate={{ opacity: 1 }}
             className="w-full bg-gray-50 rounded-2xl p-4 shadow-lg border-[1px] border-gray-300"
         >
-            <div className="mb-4 text-gray-950 flex justify-between items-center">
-                <div>
-                    <h1 className="text-xl font-semibold">
-                        <span className="font-bold">Название цели: </span>{" "}
-                        {goal.title}
-                    </h1>
+            <div className="mb-4 text-gray-950 flex justify-between items-center sm:flex-row flex-col-reverse">
+                <div className="sm:space-y-0 sm:text-start text-center space-y-4 flex flex-col">
+                    <h1 className="text-2xl font-bold">{goal.title}</h1>
                     <p className="inline items-start break-words w-full">
                         <span>Описание: </span> {goal.description}
                     </p>
@@ -28,7 +25,7 @@ export default function GoalCard({ goal }: GoalCardProps) {
                 {goal.user && (
                     <Link
                         href={`/profile/${goal.userId}`}
-                        className=" flex items-center justify-center gap-x-4"
+                        className=" flex items-center justify-center gap-x-4 sm:mb-0 mb-2 "
                     >
                         <p className="text-xl font-bold">{goal.user.name}</p>
 

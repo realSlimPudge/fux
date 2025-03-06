@@ -19,8 +19,8 @@ export default function SmartWidget({
 }: Props) {
     return (
         <motion.div
+            whileInView={{ opacity: 1, x: 0 }}
             initial={{ opacity: 0, x: x }}
-            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: delay }}
             className="text-8xl flex justify-center items-center font-semibold 
                          cursor-default relative overflow-visible group shadow-2xl rounded-2xl"
