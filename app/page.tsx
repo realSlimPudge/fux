@@ -19,10 +19,10 @@ export default function Home() {
                     <div className="sm:hidden block w-[200%] h-[344px] absolute z-0 transform translate-x-[-50%] translate-y-[-50%] top-[82%] left-[55%] rotate-45">
                         <RoundCorner />
                     </div>
-                    <h1 className="sm:text-7xl text-4xl font-bold z-10">
-                        Добро пожаловать в
-                        <br className="sm:hidden block mb-7" />
-                        <span className="rounded-2xl text-white bg-gray-950 px-2 py-1 font-extrabold ml-4 shadow-2xl sm:text-7xl text-7xl">
+                    <h1 className="sm:text-7xl text-4xl font-bold z-10 sm:inline flex flex-col gap-y-5 items-center">
+                        <span> Добро пожаловать в</span>
+
+                        <span className="w-fit  text-center rounded-2xl text-white bg-gray-950 px-2 py-1 font-extrabold ml-4 shadow-2xl sm:text-7xl text-7xl">
                             FUX
                         </span>
                     </h1>
