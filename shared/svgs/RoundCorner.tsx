@@ -27,18 +27,18 @@ export default function RoundCorner() {
                         id="uundulate-grad"
                     >
                         <stop
-                            stop-color="hsl(0, 0%, 71%)"
-                            stop-opacity="1"
+                            stopColor="hsl(0, 0%, 71%)"
+                            stopOpacity="1"
                             offset="45%"
                         ></stop>
                         <stop
-                            stop-color="hsl(0, 0%, 28%)"
-                            stop-opacity="1"
+                            stopColor="hsl(0, 0%, 28%)"
+                            stopOpacity="1"
                             offset="100%"
                         ></stop>
                     </linearGradient>
                 </defs>
-                <g stroke-width="2" stroke="url(#uundulate-grad)" fill="none">
+                <g strokeWidth="2" stroke="url(#uundulate-grad)" fill="none">
                     <path
                         className="delay-150 transition-all ease duration-[1200ms]"
                         strokeDasharray={`${animate ? "700 0" : "200 100"}`}

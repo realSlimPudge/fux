@@ -3,10 +3,12 @@ import "./globals.css";
 import Header from "@/shared/Header";
 import Providers from "./Providers";
 import { Nunito } from "next/font/google";
+import MobileNavBar from "@/widgets/MobileNavBar";
 
 export const metadata: Metadata = {
     title: "FUX",
-    description: "Create SMART-goals",
+    description:
+        "Создавайте SMART-цели, делитесь с другими пользователями, достигайте результата",
 };
 
 const openSans = Nunito({
@@ -25,6 +27,7 @@ export default function RootLayout({
                 <Providers>
                     <Header />
                     <main>{children}</main>
+                    <MobileNavBar />
                 </Providers>
             </body>
         </html>

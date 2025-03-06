@@ -1,5 +1,6 @@
 "use client";
 import SmartWidget from "@/shared/SmartWidget";
+import CornerCircle from "@/shared/svgs/CornerCircle";
 import RoundCorner from "@/shared/svgs/RoundCorner";
 import { motion } from "framer-motion";
 export default function Home() {
@@ -31,9 +32,10 @@ export default function Home() {
                         делитесь успехами с сообществом.
                     </h2>
                 </motion.div>
+                {/* мобилка */}
                 <motion.div
-                    className="flex sm:h-fit h-screen flex-col gap-y-4 grow w-full sm:hidden
-                sm:items-start sm:justify-normal items-end justify-center"
+                    className="flex sm:h-fit h-screen flex-col gap-y-4 grow w-[120%] sm:hidden
+                sm:items-start sm:justify-normal items-end justify-center relative z-10"
                 >
                     <SmartWidget
                         title="S"
@@ -50,28 +52,41 @@ export default function Home() {
                         minititle="Measurable"
                         description="Необходимо установить критерии, по которым можно оценить прогресс и определить, достигнута ли цель."
                     />
-                    <SmartWidget
-                        delay={0.3}
-                        x={20}
-                        title="A"
-                        minititle="Achievable"
-                        description="Цель должна быть реалистичной и достижимой с учетом доступных ресурсов, возможностей и ограничений."
-                    />
-                    <SmartWidget
-                        delay={0.4}
-                        x={-20}
-                        title="R"
-                        minititle="Relevant"
-                        description="Цель должна быть значимой и соответствовать вашим долгосрочным планам или ценностям."
-                    />
-                    <SmartWidget
-                        delay={0.5}
-                        x={20}
-                        title="T"
-                        minititle="Time-bound"
-                        description="Цель должна иметь четкие временные рамки, чтобы можно было отслеживать прогресс и сохранять мотивацию."
-                    />
+                    <div className="z-20">
+                        <SmartWidget
+                            delay={0.3}
+                            x={20}
+                            title="A"
+                            minititle="Achievable"
+                            description="Цель должна быть реалистичной и достижимой с учетом доступных ресурсов, возможностей и ограничений."
+                        />
+                    </div>
+                    <div className="z-20">
+                        <SmartWidget
+                            delay={0.4}
+                            x={-20}
+                            title="R"
+                            minititle="Relevant"
+                            description="Цель должна быть значимой и соответствовать вашим долгосрочным планам или ценностям."
+                        />
+                    </div>
+                    <div className="z-20">
+                        <SmartWidget
+                            delay={0.5}
+                            x={20}
+                            title="T"
+                            minititle="Time-bound"
+                            description="Цель должна иметь четкие временные рамки, чтобы можно было отслеживать прогресс и сохранять мотивацию."
+                        />
+                    </div>
+                    <div
+                        className="sm:hidden block w-[600px] h-[600px] absolute z-0 transform translate-x-[-50%] 
+                    translate-y-[-50%] top-[70%] left-[65%] opacity-60 rotate-[120deg]"
+                    >
+                        <CornerCircle />
+                    </div>
                 </motion.div>
+                {/* пк */}
                 <motion.div
                     className="flex flex-col gap-y-4 grow justify-center items-end max-sm:hidden"
                     initial={{ x: -150 }}
