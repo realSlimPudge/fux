@@ -7,7 +7,7 @@ export default function NavBar() {
     const pathname = usePathname();
 
     return (
-        <nav className="w-full flex justify-between items-center h-full text-gray-950">
+        <nav className="w-full flex justify-center items-center h-full text-gray-950 gap-x-4">
             <Link
                 href="/"
                 className={`${

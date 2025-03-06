@@ -17,7 +17,7 @@ export default function Header() {
                 </Link>
             </div>
 
-            <div className="w-[30%] h-[40px] ">
+            <div className="w-full h-[40px] ">
                 <NavBar />
             </div>
             <div className="w-[10%] flex items-end justify-end">

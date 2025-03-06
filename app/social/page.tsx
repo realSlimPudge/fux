@@ -32,7 +32,7 @@ export default function Social() {
     return (
         <>
             <div className="flex flex-col w-full space-y-10">
-                <div className="w-3/4 mx-auto">
+                <div className="sm:w-3/4 w-11/12 mx-auto">
                     <h1 className="text-5xl font-bold text-gray-950 mb-10">
                         Публичные цели
                     </h1>

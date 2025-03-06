@@ -26,7 +26,7 @@ export default function SmartWidget({
                          cursor-default relative overflow-visible group shadow-2xl rounded-2xl"
         >
             <div
-                className={`group-hover:bg-gray-900 relative z-10 bg-gray-950 w-28 h-28 rounded-2xl flex justify-center items-center transition-all ease duration-300 `}
+                className={`group-hover:bg-gray-900 relative z-10 bg-gray-950 w-28 h-28 rounded-2xl flex justify-center items-center transition-all ease duration-300 font-bold`}
             >
                 {title}
             </div>
