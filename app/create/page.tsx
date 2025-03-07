@@ -1,10 +1,5 @@
-import CreateGoalWizard from '@/features/goals/create/ui/CreateGoalWizard'
-import PageContainer from '@/shared/PageContainer'
+import CreateGoalWizard from "@/features/goals/create/ui/CreateGoalWizard";
 
 export default function Create() {
-	return (
-		<PageContainer>
-			<CreateGoalWizard />
-		</PageContainer>
-	)
+    return <CreateGoalWizard />;
 }

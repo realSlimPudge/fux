@@ -1,11 +1,16 @@
+"use client";
+
 import { signOut } from "next-auth/react";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 export default function LogoutBtn() {
+    const handleSignOut = async () => {
+        await signOut({ callbackUrl: "/" });
+    };
     return (
         <>
             <button
-                onClick={() => signOut()}
+                onClick={handleSignOut}
                 className="bg-gray-50 border-[1px] border-gray-300 rounded-3xl p-4 py-2 text-gray-600 shadow-sm hover:bg-red-100 hover:border-red-100
                 transition-all ease duration-300"
             >

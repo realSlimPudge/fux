@@ -21,8 +21,8 @@ export default function ProfileCardSkeleton() {
                     }}
                 />
             </div>
-            <div>
-                <div className=" rounded-full w-80 h-80 mt-3 mb-10 group relative">
+            <div className="flex justify-center">
+                <div className=" rounded-full w-[250px] h-[250px] mt-3 mb-10 group relative">
                     <Skeleton
                         variant="circular"
                         animation="wave"
@@ -33,8 +33,8 @@ export default function ProfileCardSkeleton() {
                             left: "50%",
                             transform: "translate(-50%,-50%)",
                         }}
-                        width={320}
-                        height={320}
+                        width={250}
+                        height={250}
                     />
                 </div>
             </div>

@@ -8,10 +8,16 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { z } from "zod";
+import { useState } from "react";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { CircularProgress } from "@mui/material";
 
 type RegisterFormData = z.infer<typeof registerSchema>;
 
 export default function RegisterPage() {
+    const [isVisible, setIsVisible] = useState<boolean>(false);
+
     const { register, handleSubmit, formState, setError } =
         useForm<RegisterFormData>({
             resolver: zodResolver(registerSchema),
@@ -37,7 +43,7 @@ export default function RegisterPage() {
                 email: data.email,
                 password: data.password,
                 redirect: true,
-                callbackUrl: "/profile/me",
+                callbackUrl: "/social",
             });
         } catch (error: unknown) {
             if (error instanceof Error && error.message.includes("email")) {
@@ -60,7 +66,7 @@ export default function RegisterPage() {
     return (
         <PageContainer>
             <motion.div
-                className="w-[25%] h-fit border-[1px] bg-gray-950 border-gray-700 mx-auto p-6 rounded-2xl flex flex-col justify-around gap-y-6"
+                className="sm:w-[25%] w-[90%] h-fit border-[1px] bg-gray-950 border-gray-700 mx-auto p-6 rounded-2xl flex flex-col justify-around gap-y-6"
                 initial={{ y: -20 }}
                 animate={{ y: 0 }}
             >
@@ -92,11 +98,34 @@ export default function RegisterPage() {
                     </div>
                     <div className="flex flex-col w-full gap-y-2">
                         <label className="text-xl ml-2">Пароль</label>
-                        <input
-                            type="password"
-                            {...register("password")}
-                            className="bg-transparent p-4 rounded-lg border-[1px] border-gray-700 text-xl outline-none"
-                        />
+                        <div className="relative w-full">
+                            <button
+                                type="button"
+                                onClick={() => setIsVisible(!isVisible)}
+                                className="absolute transform translate-x-[-50%] translate-y-[-50%] right-[2%] top-[50%]"
+                            >
+                                {isVisible ? (
+                                    <VisibilityOffIcon />
+                                ) : (
+                                    <VisibilityIcon />
+                                )}
+                            </button>
+                            {isVisible ? (
+                                <input
+                                    type="text"
+                                    {...register("password")}
+                                    required
+                                    className="w-full bg-transparent p-4 rounded-lg border-[1px] border-gray-700 text-xl outline-none"
+                                ></input>
+                            ) : (
+                                <input
+                                    type="password"
+                                    {...register("password")}
+                                    required
+                                    className="w-full bg-transparent p-4 rounded-lg border-[1px] border-gray-700 text-xl outline-none tracking-widest"
+                                />
+                            )}
+                        </div>
                         {formState.errors.password && (
                             <p>{formState.errors.password.message}</p>
                         )}
@@ -104,15 +133,20 @@ export default function RegisterPage() {
                     {formState.errors.root && (
                         <p>{formState.errors.root.message}</p>
                     )}
-                    <button
-                        type="submit"
-                        disabled={formState.isSubmitting}
-                        className="bg-white text-black px-4 py-3 w-fit transition-all ease duration-300 mt-5 rounded-xl text-xl font-semibold"
-                    >
-                        {formState.isSubmitting
-                            ? "Регистрация..."
-                            : "Зарегистрироваться"}
-                    </button>
+                    {formState.isSubmitting ? (
+                        <CircularProgress
+                            sx={{ color: "#ffffff", marginTop: "0.5rem" }}
+                            size={"52px"}
+                        />
+                    ) : (
+                        <button
+                            type="submit"
+                            disabled={formState.isSubmitting}
+                            className="bg-white text-black px-4 py-3 w-fit transition-all ease duration-300 rounded-xl text-xl font-semibold mt-2"
+                        >
+                            Зарегистрироваться
+                        </button>
+                    )}
                 </form>
                 <div className="text-center">
                     <p>

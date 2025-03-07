@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-<svg width="800px" height="800px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8 7C9.65685 7 11 5.65685 11 4C11 2.34315 9.65685 1 8 1C6.34315 1 5 2.34315 5 4C5 5.65685 6.34315 7 8 7Z" fill="#000000"/>
-<path d="M14 12C14 10.3431 12.6569 9 11 9H5C3.34315 9 2 10.3431 2 12V15H14V12Z" fill="#000000"/>
+<svg width="700" height="700" viewBox="0 0 700 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M350 350C422.487 350 481.25 291.237 481.25 218.75C481.25 146.263 422.487 87.5 350 87.5C277.513 87.5 218.75 146.263 218.75 218.75C218.75 291.237 277.513 350 350 350Z" fill="black"/>
+<path d="M612.5 568.75C612.5 496.261 553.739 437.5 481.25 437.5H218.75C146.263 437.5 87.5 496.261 87.5 568.75V700H612.5V568.75Z" fill="black"/>
 </svg>

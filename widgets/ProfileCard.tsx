@@ -77,17 +77,22 @@ export default function ProfileCard() {
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="w-full h-fit py-6 px-8 rounded-2xl flex flex-col justify-between
-			shadow-sm text-gray-950 border-[1px] border-gray-300 bg-gray-50"
+                className="w-full h-full sm:py-6 py-4 sm:px-8 px-4 rounded-2xl flex flex-col justify-between
+			shadow-sm text-gray-950 border-[1px] border-gray-300 bg-gray-50 gap-y-4"
             >
-                <div>
+                <div className="h-[10%]">
                     <p className="text-4xl text-end font-bold text-gray-900">
                         {user?.name}
                     </p>
                 </div>
-                <div className="relative group">
+                <div className="relative group flex justify-center items-center w-full h-[50%]">
                     {isMyProfile && (
-                        <label className="absolute right-[5%] top-[5%] z-10 cursor-pointer ">
+                        <label
+                            className="absolute right-[25%] top-[25%] z-10 cursor-pointer 
+                         transition-all ease-in-out duration-300 scale-[50%] transform opacity-0
+                         group-hover:top-[3%] group-hover:right-[3%] group-hover:scale-[100%] group-hover:opacity-100
+                        "
+                        >
                             <input
                                 type="file"
                                 accept="image/*"
@@ -96,8 +101,8 @@ export default function ProfileCard() {
                                 disabled={uploading}
                             />
                             <div
-                                className="w-[60px] h-[60px] flex justify-center items-center rounded-full bg-gray-950 
-                        transition-all ease duration-200 opacity-0 group-hover:opacity-100 hover:bg-gray-800
+                                className="w-[60px] h-[60px] flex justify-center items-center rounded-full bg-gray-950  
+                         transition-all ease duration-200 opacity-0 group-hover:opacity-100  hover:bg-gray-800 z-0
                        "
                             >
                                 <Image
@@ -110,20 +115,19 @@ export default function ProfileCard() {
                         </label>
                     )}
 
-                    <div className="overflow-hidden rounded-full w-80 h-80 bg-gray-800 relative my-8 group z-2  border-2 border-gray-300 ">
+                    <div className="z-10 bg-gray-50 overflow-hidden rounded-full sm:h-[250px] sm:w-[250px] h-[250px] w-[250px] relative group z-2 border-2 border-gray-300 ">
                         <Image
                             //подлючить аватар из бд
                             src={user?.profile.avatar || "/user-profile.svg"}
                             alt="user"
-                            className="w-full h-full top-0 left-0 object-cover "
                             fill
                             objectFit="cover"
                             draggable={false}
                         />
                     </div>
                 </div>
-                <div className="flex flex-col gap-y-5">
-                    <div className="flex flex-col">
+                <div className="flex flex-col gap-y-5 h-[30%] justify-between">
+                    <div className="flex flex-col gap-y-2">
                         <div className="flex justify-between items-center">
                             <h4 className="text-gray-700 text-2xl font-light ">
                                 Обо мне:
@@ -139,23 +143,23 @@ export default function ProfileCard() {
                                 </button>
                             )}
                         </div>
-                        <div className="h-full">
+                        <div className="h-[81px]">
                             {editing ? (
                                 <motion.textarea
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     placeholder={user?.profile.bio}
                                     maxLength={100}
-                                    className=" w-full h-[120px] outline-none rounded-md bg-gray-100 border-[1px]
-							 border-gray-300 focus:border-gray-400 px-2 resize-none text-lg text-gray-700"
+                                    className=" w-[300px] h-[80px] outline-none rounded-md bg-gray-100 border-[1px]
+							 border-gray-300 focus:border-gray-400 px-2 resize-none text-base text-gray-700 "
                                 ></motion.textarea>
                             ) : (
                                 <motion.p
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
-                                    className="text-lg text-gray-700"
+                                    className="text-lg text-gray-700 w-[300px] h-[80px] whitespace-normal break-words"
                                 >
-                                    {user?.profile.bio}
+                                    {user?.profile.bio}{" "}
                                 </motion.p>
                             )}
                         </div>

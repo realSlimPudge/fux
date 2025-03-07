@@ -29,7 +29,7 @@ export default function AuthWidget() {
                     href={`/profile/${session.user.id}`}
                     className=" flex items-center justify-center gap-x-5"
                 >
-                    <div className=" w-[35px] h-[35px] overflow-hidden rounded-full flex items-center justify-center relative ">
+                    <div className="bg-gray-50 w-[35px] h-[35px] overflow-hidden rounded-full flex items-center justify-center relative ">
                         <Image
                             alt="user"
                             src={`${

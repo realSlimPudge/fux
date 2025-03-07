@@ -134,7 +134,7 @@ export default function CreateGoalWizard() {
     return (
         <FormProvider {...methods}>
             <form
-                className="z-10"
+                className="z-10 sm:w-[95%] w-[90%] flex justify-center py-20"
                 onSubmit={methods.handleSubmit(handleSubmit)}
                 onKeyDown={(e) => {
                     if (e.key === "Enter") {
@@ -143,7 +143,7 @@ export default function CreateGoalWizard() {
                 }}
             >
                 <motion.div
-                    className="text-gray-950 flex flex-col gap-y-7 mt-5 max-w-[900px] min-w-[650px]"
+                    className="text-gray-950 flex flex-col gap-y-7 mt-5 max-w-[900px] w-[100%]"
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                 >
@@ -158,10 +158,14 @@ export default function CreateGoalWizard() {
                         </p>
                     </div>
 
-                    <div className="min-h-[440px] flex justify-center items-center">
+                    <div className="sm:min-h-[440px] flex justify-center items-center">
                         {stepsComponents[currentStepName]}
                     </div>
-                    <div className="flex justify-center items-center w-fit mx-auto gap-x-10">
+                    <div
+                        className={`flex justify-center items-center gap-x-10 sm:flex-row  sm:gap-y-0  ${
+                            stage < stages.length - 1 ? "" : "gap-y-3 flex-col"
+                        }`}
+                    >
                         {stage > 0 && (
                             <button
                                 type="button"

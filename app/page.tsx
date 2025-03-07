@@ -43,10 +43,10 @@ export default function Home() {
                         description="Цель должна быть четко определена и однозначно сформулирована, чтобы обеспечить ясное понимание."
                         tip={true}
                         x={15}
-                        delay={0.1}
+                        delay={0}
                     />
                     <SmartWidget
-                        delay={0.2}
+                        delay={0}
                         x={-10}
                         title="M"
                         minititle="Measurable"
@@ -54,7 +54,7 @@ export default function Home() {
                     />
                     <div className="z-20">
                         <SmartWidget
-                            delay={0.3}
+                            delay={0}
                             x={20}
                             title="A"
                             minititle="Achievable"
@@ -63,7 +63,7 @@ export default function Home() {
                     </div>
                     <div className="z-20">
                         <SmartWidget
-                            delay={0.4}
+                            delay={0}
                             x={-20}
                             title="R"
                             minititle="Relevant"
@@ -72,7 +72,7 @@ export default function Home() {
                     </div>
                     <div className="z-20">
                         <SmartWidget
-                            delay={0.5}
+                            delay={0}
                             x={20}
                             title="T"
                             minititle="Time-bound"

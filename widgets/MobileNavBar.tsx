@@ -1,44 +1,74 @@
 "use client";
 
+import { useMediaQuery } from "@mui/material";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function MobileNavBar() {
     const pathname = usePathname();
+
+    const [prevScrollPos, setPrevScrollPos] = useState(0);
+    const [visible, setVisible] = useState(true);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollPos = window.pageYOffset;
+            setVisible(
+                prevScrollPos > currentScrollPos || currentScrollPos < 10
+            );
+            setPrevScrollPos(currentScrollPos);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [prevScrollPos]);
+
+    const isMobile = useMediaQuery("(max-width:640px)");
+
+    if (!isMobile) {
+        return null;
+    }
+
     return (
-        <aside className="w-screen h-[70px] bg-gray-100 z-30 sticky left-[0%] transform  bottom-[0px] flex items-center border-t-[1px]">
-            <nav className="flex w-full justify-between items-center text-gray-950 px-2">
+        <aside
+            className={`w-[90%] mx-auto h-[50px] shadow-md bg-gray-100 z-30 fixed left-[50%] transform bottom-[20px] translate-x-[-50%]
+         flex items-center border-gray-300 border-[1px] rounded-3xl transition-all ease-in-out duration-500 ${
+             visible ? "translate-y-0" : "translate-y-[150%]"
+         } `}
+        >
+            <nav className="flex w-full h-full justify-between items-center text-gray-950 ">
                 <Link
                     href="/"
                     className={`${
-                        pathname === "/" ? "active" : ""
-                    }  transition-all ease duration-200  h-full flex items-center rounded-lg px-2 border-transparent border-[1px] hover:border-gray-700`}
+                        pathname === "/" ? "active__mobile" : ""
+                    }  transition-all ease duration-200  h-full flex items-center rounded-3xl px-3 border-transparent border-[1px] hover:border-gray-700`}
                 >
                     Главная
                 </Link>
                 <Link
                     href="/about"
                     className={`${
-                        pathname === "/about" ? "active" : ""
-                    } transition-all ease duration-200  h-full flex items-center rounded-lg px-2 border-transparent border-[1px] hover:border-gray-700`}
+                        pathname === "/about" ? "active__mobile" : ""
+                    } transition-all ease duration-200  h-full flex items-center rounded-3xl px-3 border-transparent border-[1px] hover:border-gray-700`}
                 >
                     О нас
                 </Link>
                 <Link
                     href="/social"
                     className={`${
-                        pathname === "/social" ? "active" : ""
-                    } transition-all ease duration-200  h-full flex items-center rounded-lg px-2 border-transparent border-[1px] hover:border-gray-700`}
+                        pathname === "/social" ? "active__mobile" : ""
+                    } transition-all ease duration-200  h-full flex items-center rounded-3xl px-3 border-transparent border-[1px] hover:border-gray-700`}
                 >
                     Цели
                 </Link>
                 <Link
                     href="/create"
                     className={`${
-                        pathname === "/create" ? "active" : ""
-                    } transition-all ease duration-200  h-full flex items-center rounded-lg px-2 border-transparent border-[1px] hover:border-gray-700`}
+                        pathname === "/create" ? "active__mobile" : ""
+                    } transition-all ease duration-200  h-full flex items-center rounded-3xl px-3 border-transparent border-[1px] hover:border-gray-700`}
                 >
-                    Создать цель
+                    Создать
                 </Link>
             </nav>
         </aside>

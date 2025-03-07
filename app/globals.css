@@ -20,17 +20,6 @@
     }
 }
 
-.corner1::before {
-    content: "";
-    position: fixed;
-    transform: translate(-50%, -50%) rotate(-90deg);
-    top: 5%;
-    left: 5%;
-    width: 800px;
-    height: 800px;
-    background-image: url(/corner3.svg);
-}
-
 .active {
     position: relative;
     color: white;
@@ -38,6 +27,17 @@
     padding: 1.25rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
+    background-color: black;
+    color: white;
+}
+
+.active__mobile {
+    position: relative;
+    color: white;
+    border-radius: 1.5rem;
+    padding: 1.25rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
     background-color: black;
     color: white;
 }

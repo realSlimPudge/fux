@@ -50,23 +50,31 @@ export default function GoalCard({ goal }: GoalCardProps) {
             <div className="grid sm:grid-cols-2 gap-4 grid-cols-1">
                 <div className="bg-gray-950 rounded-2xl text-gray-50 p-4 font-extrabold text-xl">
                     Specific{" "}
-                    <p className="font-normal text-base">{goal.specific}</p>
+                    <p className="font-normal text-base h-fit w-full whitespace-normal break-words">
+                        {goal.specific}
+                    </p>
                 </div>
                 <div className="bg-gray-950 rounded-2xl text-gray-50 p-4 font-extrabold text-xl">
                     Measure{" "}
-                    <p className="font-normal text-base">{goal.measurable}</p>
+                    <p className="font-normal text-base h-fit w-full whitespace-normal break-words">
+                        {goal.measurable}
+                    </p>
                 </div>
                 <div className="bg-gray-950 rounded-2xl text-gray-50 p-4 font-extrabold text-xl">
                     Achievable{" "}
-                    <p className="font-normal text-base">{goal.achievable}</p>
+                    <p className="font-normal text-base h-fit w-full whitespace-normal break-words">
+                        {goal.achievable}
+                    </p>
                 </div>
                 <div className="bg-gray-950 rounded-2xl text-gray-50 p-4 font-extrabold text-xl">
                     Relevant{" "}
-                    <p className="font-normal text-base">{goal.relevant}</p>
+                    <p className="font-normal text-base h-fit w-full whitespace-normal break-words">
+                        {goal.relevant}
+                    </p>
                 </div>
                 <div className="sm:col-span-2 bg-gray-950 rounded-2xl text-gray-50 p-4 font-extrabold text-xl col-span-1">
                     Time-bound{" "}
-                    <p className="font-normal text-base">
+                    <p className="font-normal text-base h-fit w-full whitespace-normal break-words">
                         {goal.timeBoundText}
                     </p>
                 </div>
