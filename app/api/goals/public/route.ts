@@ -12,6 +12,8 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const page = Number(searchParams.get("page")) || 1;
     const perPage = Number(searchParams.get("perPage")) || 5;
+    const sort: "asc" | "desc" =
+        searchParams.get("sort") === "asc" ? "asc" : "desc";
     const skip = (page - 1) * perPage;
 
     const [goals, total] = await Promise.all([
@@ -19,7 +21,7 @@ export async function GET(request: Request) {
             where: { isPublic: true },
             skip,
             take: perPage,
-            orderBy: { createdAt: "desc" },
+            orderBy: { createdAt: sort },
             select: {
                 id: true,
                 title: true,

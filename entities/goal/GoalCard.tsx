@@ -1,8 +1,7 @@
 import { Goal } from "@/shared/types/goal";
-import Image from "next/image";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import LikeButton from "@/features/like/ui/LikeButton";
+import UserMini from "./UserMini";
 
 interface GoalCardProps {
     goal: Goal;
@@ -15,36 +14,14 @@ export default function GoalCard({ goal }: GoalCardProps) {
             animate={{ opacity: 1 }}
             className="w-full bg-gray-50 rounded-2xl p-4 shadow-lg border-[1px] border-gray-300"
         >
-            <div className="mb-4 text-gray-950 flex justify-between items-center sm:flex-row flex-col-reverse">
+            <div className="mb-4 text-gray-950 flex justify-between items-center sm:flex-row flex-col-reverse  gap-x-3">
                 <div className="sm:space-y-0 sm:text-start text-center space-y-4 flex flex-col">
                     <h1 className="text-2xl font-bold">{goal.title}</h1>
                     <p className="inline items-start break-words w-full">
                         <span>Описание: </span> {goal.description}
                     </p>
                 </div>
-                {goal.user && (
-                    <Link
-                        href={`/profile/${goal.userId}`}
-                        className=" flex items-center justify-center gap-x-4 sm:mb-0 mb-2 "
-                    >
-                        <p className="text-xl font-bold">{goal.user.name}</p>
-
-                        <div className=" w-[35px] h-[35px] overflow-hidden rounded-full flex items-center justify-center relative ">
-                            <Image
-                                alt="user"
-                                src={
-                                    goal.user.profile.avatar
-                                        ? goal.user.profile.avatar
-                                        : "/user-profile.svg"
-                                }
-                                className="w-full h-full top-0 left-0 object-cover "
-                                fill
-                                objectFit="cover"
-                                draggable={false}
-                            />
-                        </div>
-                    </Link>
-                )}
+                <div>{goal.user && <UserMini goal={goal} />}</div>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-4 grid-cols-1">

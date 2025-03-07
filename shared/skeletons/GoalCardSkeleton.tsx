@@ -9,27 +9,30 @@ export default function GoalCardSkeleton() {
             animate={{ opacity: 1 }}
             className="w-full bg-gray-50 rounded-2xl p-4 shadow-lg border-[1px] border-gray-300"
         >
-            <div className="mb-4 text-gray-950 flex justify-between items-center">
-                <div className="w-3/4">
+            <div
+                className="mb-4 text-gray-950 flex justify-between items-center 
+             sm:flex-row flex-col-reverse sm:gap-y-0 gap-y-3"
+            >
+                <div className="sm:w-3/4 w-4/5 sm:block flex flex-col items-center">
                     <Skeleton
+                        className="sm:w-1/2 w-[80%]"
                         variant="text"
                         animation="wave"
-                        width={"50%"}
                         sx={{ bgcolor: `${skeletonBgColor}` }}
                     />
 
                     <Skeleton
+                        className="sm:w-[70%] w-[100%]"
                         variant="text"
                         animation="wave"
-                        width={"70%"}
                         sx={{ bgcolor: `${skeletonBgColor}` }}
                     />
                 </div>
-                <div className="w-1/4 flex items-center justify-end gap-x-4">
+                <div className="sm:w-1/4 w-2/4 flex items-center sm:justify-end justify-center gap-x-4 ">
                     <Skeleton
                         variant="text"
                         animation="wave"
-                        width={"60%"}
+                        width={"40%"}
                         height={30}
                         sx={{
                             textAlign: "end",
@@ -47,7 +50,7 @@ export default function GoalCardSkeleton() {
                 </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid sm:grid-cols-2 grid-cols-1 gap-4">
                 <Skeleton
                     variant="rounded"
                     width={"100%"}
@@ -73,11 +76,11 @@ export default function GoalCardSkeleton() {
                     sx={{ bgcolor: `${skeletonBgColor}` }}
                 />
                 <Skeleton
+                    className="sm:col-span-2 col-span-1"
                     variant="rounded"
                     width={"100%"}
                     height={80}
                     sx={{
-                        gridColumn: "span 2 / span 2",
                         bgcolor: `${skeletonBgColor}`,
                     }}
                 />

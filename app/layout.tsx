@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/shared/Header";
+import Header from "@/shared/TheHeader/Header";
 import Providers from "./Providers";
 import { Nunito } from "next/font/google";
 import MobileNavBar from "@/widgets/MobileNavBar";

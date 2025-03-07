@@ -19,6 +19,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { goalSchema } from "@/shared/schemas/goal";
 import { redirect } from "next/navigation";
 import PageLoader from "@/shared/loading/PageLoader";
+import { LinearProgress } from "@mui/material";
+import { useState } from "react";
 
 const stepsComponents: { [key: string]: React.ReactNode } = {
     title: <TitleStep key="title" />,
@@ -50,6 +52,7 @@ export default function CreateGoalWizard() {
     const setIsPublic = useGoalState((state) => state.setIsPublic);
     const nextStep = useGoalState((state) => state.nextStep);
     const prevStep = useGoalState((state) => state.prevStep);
+    const [isPending, setIsPending] = useState<boolean>(false);
 
     const session = useSession();
 
@@ -112,6 +115,7 @@ export default function CreateGoalWizard() {
     }
 
     const handleSubmit = async () => {
+        setIsPending(true);
         const data = methods.getValues();
         try {
             const response = await fetch("api/goals/create", {
@@ -127,6 +131,7 @@ export default function CreateGoalWizard() {
         } catch (error) {
             console.error(error);
         } finally {
+            setIsPending(false);
             redirect("/profile/me");
         }
     };
@@ -202,11 +207,25 @@ export default function CreateGoalWizard() {
                                         ? "Эта цель видна всем"
                                         : "Эта цель видна только вам"}
                                 </button>
+
                                 <button
+                                    disabled={isPending}
                                     type="submit"
                                     className=" shadow-md border-[1px] border-transparent rounded-2xl px-4 py-2 bg-gray-950 text-gray-50 duration-200 ease transition-all hover:shadow-lg text-xl hover:bg-gray-900 "
                                 >
-                                    Сохранить цель
+                                    {isPending ? (
+                                        <LinearProgress
+                                            sx={{
+                                                color: "#ffffff",
+                                                height: "10px",
+                                                width: "146px",
+                                                borderRadius: "6px",
+                                                backgroundColor: "#ffffff",
+                                            }}
+                                        />
+                                    ) : (
+                                        "Сохранить цель"
+                                    )}
                                 </button>
                             </>
                         )}
