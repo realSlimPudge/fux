@@ -7,6 +7,7 @@ export default function GoalCardSkeleton() {
         <motion.li
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             className="w-full bg-gray-50 rounded-2xl p-4 shadow-lg border-[1px] border-gray-300"
         >
             <div

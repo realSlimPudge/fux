@@ -7,6 +7,7 @@ export default function ProfileCardSkeleton() {
         <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             className="bg-gray-50 py-6 px-8 rounded-2xl h-full shadow-sm border-[1px] border-gray-300"
         >
             <div className="flex justify-end">

@@ -10,33 +10,59 @@ import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { motion } from "framer-motion";
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+type ProfileCardProps = {
+    setError: (error: string) => void;
+};
 
-export default function ProfileCard() {
+const fetcher = async (url: string) => {
+    const res = await fetch(url);
+    if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "Произошла ошибка");
+    }
+    return res.json();
+};
+
+export default function ProfileCard({ setError }: ProfileCardProps) {
     const { id } = useParams();
     const { data: session } = useSession();
 
     const [user, setUser] = useState<User | null>(null);
     const [uploading, setUploading] = useState<boolean>(false);
-    const [editing, setEditing] = useState<boolean>(false);
 
-    const { data, isLoading } = useSWR(`/api/user/profile/${id}`, fetcher, {
-        refreshInterval: 5000,
-    });
+    const [editing, setEditing] = useState<boolean>(false);
+    const [prevBio, setPrevBio] = useState<string>("");
+    const [newBio, setNewBio] = useState<string>("");
+    const [bioUploading, setBioUploading] = useState<boolean>(false);
+
+    const { data, isLoading, error } = useSWR(
+        `/api/user/profile/${id}`,
+        fetcher,
+        {
+            refreshInterval: 5000,
+            errorRetryInterval: 15000,
+            errorRetryCount: 2,
+            revalidateOnFocus: false,
+            revalidateOnReconnect: false,
+        }
+    );
 
     useEffect(() => {
         if (data) {
             setUser(data);
+            setPrevBio(data.profile.bio);
         }
     }, [data]);
+
+    useEffect(() => {
+        if (error) {
+            setError(error.message);
+        }
+    }, [error]);
 
     if (isLoading) {
         return <ProfileCardSkeleton />;
     }
-
-    // if (error) {
-    // 	return <div>Произошла ошибка: {error}</div>
-    // }
 
     const isMyProfile = session?.user?.id === user?.id;
 
@@ -69,6 +95,26 @@ export default function ProfileCard() {
             console.error("Ошибка загрузки аватара", err);
         } finally {
             setUploading(false);
+        }
+    };
+
+    const handleBioChange = async () => {
+        try {
+            setBioUploading(true);
+            const res = await fetch(`/api/user/bio/${id}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ bio: newBio }),
+            });
+            if (!res.ok) {
+                throw new Error("Ошибка при изменении биографии");
+            }
+        } catch (error) {
+            console.error("Ошибка при изменении биографии", error);
+        } finally {
+            setBioUploading(false);
         }
     };
 
@@ -132,16 +178,40 @@ export default function ProfileCard() {
                             <h4 className="text-gray-700 text-2xl font-light ">
                                 Обо мне:
                             </h4>
-                            {isMyProfile && (
-                                <button
-                                    className="text-gray-400 text-sm hover:underline"
-                                    onClick={() => {
-                                        setEditing(!editing);
-                                    }}
-                                >
-                                    {editing ? "Сохранить" : "Редактировать"}
-                                </button>
-                            )}
+                            <div className="space-x-2">
+                                {isMyProfile && (
+                                    <>
+                                        {editing && (
+                                            <button
+                                                className="text-gray-400 text-sm hover:underline"
+                                                onClick={() => {
+                                                    setEditing(!editing);
+                                                }}
+                                            >
+                                                Отмена
+                                            </button>
+                                        )}
+
+                                        <button
+                                            disabled={bioUploading}
+                                            className="text-gray-400 text-sm hover:underline"
+                                            onClick={() => {
+                                                if (editing) {
+                                                    handleBioChange();
+                                                    setPrevBio(newBio);
+                                                }
+                                                setEditing(!editing);
+                                            }}
+                                        >
+                                            {bioUploading
+                                                ? "Сохранение..."
+                                                : editing
+                                                ? "Сохранить"
+                                                : "Редактировать"}
+                                        </button>
+                                    </>
+                                )}
+                            </div>
                         </div>
                         <div className="h-[81px]">
                             {editing ? (
@@ -150,16 +220,19 @@ export default function ProfileCard() {
                                     animate={{ opacity: 1 }}
                                     placeholder={user?.profile.bio}
                                     maxLength={100}
-                                    className=" w-[300px] h-[80px] outline-none rounded-md bg-gray-100 border-[1px]
+                                    onInput={(e) => {
+                                        setNewBio(e.currentTarget.value);
+                                    }}
+                                    className=" w-full h-[80px] outline-none rounded-md bg-gray-100 border-[1px]
 							 border-gray-300 focus:border-gray-400 px-2 resize-none text-base text-gray-700 "
                                 ></motion.textarea>
                             ) : (
                                 <motion.p
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
-                                    className="text-lg text-gray-700 w-[300px] h-[80px] whitespace-normal break-words"
+                                    className="text-lg text-gray-700 w-full h-[80px] whitespace-normal break-words"
                                 >
-                                    {user?.profile.bio}{" "}
+                                    {prevBio}{" "}
                                 </motion.p>
                             )}
                         </div>
