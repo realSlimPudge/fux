@@ -213,28 +213,23 @@ export default function ProfileCard({ setError }: ProfileCardProps) {
                                 )}
                             </div>
                         </div>
-                        <div className="h-[81px]">
-                            {editing ? (
-                                <motion.textarea
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    placeholder={user?.profile.bio}
-                                    maxLength={100}
-                                    onInput={(e) => {
-                                        setNewBio(e.currentTarget.value);
-                                    }}
-                                    className=" w-full h-[80px] outline-none rounded-md bg-gray-100 border-[1px]
-							 border-gray-300 focus:border-gray-400 px-2 resize-none text-base text-gray-700 "
-                                ></motion.textarea>
-                            ) : (
-                                <motion.p
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    className="text-lg text-gray-700 w-full h-[80px] whitespace-normal break-words"
-                                >
-                                    {prevBio}{" "}
-                                </motion.p>
-                            )}
+                        <div className="h-fit w-full">
+                            <motion.textarea
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                placeholder={user?.profile.bio}
+                                maxLength={100}
+                                onInput={(e) => {
+                                    setNewBio(e.currentTarget.value);
+                                }}
+                                disabled={!editing}
+                                value={editing ? newBio : prevBio}
+                                className={`m-0 p-2 text-lg w-full h-[130px] border-[1px] box-border outline-none rounded-md resize-none text-gray-700 ${
+                                    editing
+                                        ? "bg-gray-100  border-gray-400"
+                                        : "bg-transparent border-transparent"
+                                }`}
+                            />
                         </div>
                     </div>
                     <div>
