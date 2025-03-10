@@ -128,3 +128,14 @@
     background-color: #000000;
     border-radius: 6px;
 }
+
+.date--before:before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    transform: translateX(-50%);
+    left: 50%;
+    height: 1px;
+    width: 95%;
+    background-color: #d1d5db;
+}

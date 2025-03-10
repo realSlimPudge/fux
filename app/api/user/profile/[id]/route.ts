@@ -9,7 +9,6 @@ export async function GET(
     const { id } = await params;
 
     const session = await getServerSession(authOptions);
-    const userId = session?.user?.id;
 
     if (!id) {
         return new Response(JSON.stringify({ error: "ID не указан" }), {
@@ -17,8 +16,8 @@ export async function GET(
         });
     }
 
-    // Если запрос к "/profile/me", подставляем ID текущего юзера
-    //const userId = id === 'me' ? session?.user?.id ?? null : id
+    //Если запрос к "/profile/me", подставляем ID текущего юзера
+    const userId = id === session?.user.id ? session?.user?.id ?? null : id;
 
     if (!userId) {
         return new Response(JSON.stringify({ error: "Не авторизован" }), {

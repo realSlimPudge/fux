@@ -173,7 +173,7 @@ export default function ProfileCard({ setError }: ProfileCardProps) {
                     </div>
                 </div>
                 <div className="flex flex-col gap-y-5 h-[30%] justify-between">
-                    <div className="flex flex-col gap-y-2">
+                    <div className="flex flex-col gap-y-1">
                         <div className="flex justify-between items-center">
                             <h4 className="text-gray-700 text-2xl font-light ">
                                 Обо мне:
@@ -213,7 +213,7 @@ export default function ProfileCard({ setError }: ProfileCardProps) {
                                 )}
                             </div>
                         </div>
-                        <div className="h-fit w-full">
+                        <div className="h-fit w-full space-y-1">
                             <motion.textarea
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
@@ -224,15 +224,25 @@ export default function ProfileCard({ setError }: ProfileCardProps) {
                                 }}
                                 disabled={!editing}
                                 value={editing ? newBio : prevBio}
-                                className={`m-0 p-2 text-lg w-full h-[130px] border-[1px] box-border outline-none rounded-md resize-none text-gray-700 ${
+                                className={`m-0 p-2 text-lg w-full h-[130px] border-[1px] box-border hyphens-auto outline-none rounded-md resize-none text-gray-700 ${
                                     editing
                                         ? "bg-gray-100  border-gray-400"
                                         : "bg-transparent border-transparent"
                                 }`}
                             />
+                            {editing && (
+                                <motion.div
+                                    className="text-gray-500 flex justify-end"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                >
+                                    Осталось символов: {100 - newBio.length}
+                                </motion.div>
+                            )}
                         </div>
                     </div>
-                    <div>
+
+                    <div className="date--before relative">
                         <p className="flex justify-between items-center">
                             <span className="text-gray-700 text-xl font-light ">
                                 Дата регистрации:

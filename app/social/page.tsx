@@ -23,6 +23,12 @@ export default function Social() {
     );
 
     useEffect(() => {
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }, 100);
+    }, [page]);
+
+    useEffect(() => {
         if (data) {
             setGoals(data.goals);
             setTotal(data.total);
