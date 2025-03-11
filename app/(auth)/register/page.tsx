@@ -67,8 +67,8 @@ export default function RegisterPage() {
         <PageContainer>
             <motion.div
                 className="sm:w-[25%] w-[90%] h-fit border-[1px] bg-gray-950 border-gray-700 mx-auto p-6 rounded-2xl flex flex-col justify-around gap-y-6"
-                initial={{ y: -20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
+                initial={{ x: -20, opacity: 0.5 }}
+                animate={{ x: 0, opacity: 1 }}
             >
                 <h1 className="text-center text-4xl font-bold">Регистрация</h1>
                 <form

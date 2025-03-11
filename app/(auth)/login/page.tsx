@@ -41,8 +41,8 @@ export default function LoginPage() {
         <PageContainer>
             <motion.div
                 className="sm:w-[25%] w-[90%] bg-gray-950 h-fit border-[1px] border-gray-700 mx-auto p-6 rounded-2xl flex flex-col justify-around gap-y-6 "
-                initial={{ y: -20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
+                initial={{ x: -20, opacity: 0.5 }}
+                animate={{ x: 0, opacity: 1 }}
             >
                 <h1 className="text-center text-4xl font-bold">Вход</h1>
                 <form

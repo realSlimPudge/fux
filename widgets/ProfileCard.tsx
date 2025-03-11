@@ -9,6 +9,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { motion } from "framer-motion";
+import { CircularProgress } from "@mui/material";
 
 type ProfileCardProps = {
     setError: (error: string) => void;
@@ -66,6 +67,7 @@ export default function ProfileCard({ setError }: ProfileCardProps) {
 
     const isMyProfile = session?.user?.id === user?.id;
 
+    //Смена аватарки
     const handleAvatarUpload = async (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
@@ -98,6 +100,7 @@ export default function ProfileCard({ setError }: ProfileCardProps) {
         }
     };
 
+    //Смена описания
     const handleBioChange = async () => {
         try {
             setBioUploading(true);
@@ -162,14 +165,28 @@ export default function ProfileCard({ setError }: ProfileCardProps) {
                     )}
 
                     <div className="z-10 bg-gray-50 overflow-hidden rounded-full sm:h-[250px] sm:w-[250px] h-[250px] w-[250px] relative group z-2 border-2 border-gray-300 ">
-                        <Image
-                            //подлючить аватар из бд
-                            src={user?.profile.avatar || "/user-profile.svg"}
-                            alt="user"
-                            fill
-                            objectFit="cover"
-                            draggable={false}
-                        />
+                        {uploading ? (
+                            <div className="w-full h-full backdrop-brightness-95 flex justify-center items-center">
+                                <CircularProgress
+                                    sx={{
+                                        color: "#000000",
+                                        width: "40px",
+                                        height: "40px",
+                                    }}
+                                />
+                            </div>
+                        ) : (
+                            <Image
+                                //подлючить аватар из бд
+                                src={
+                                    user?.profile.avatar || "/user-profile.svg"
+                                }
+                                alt="user"
+                                fill
+                                objectFit="cover"
+                                draggable={false}
+                            />
+                        )}
                     </div>
                 </div>
                 <div className="flex flex-col gap-y-5 h-[30%] justify-between">
@@ -230,6 +247,7 @@ export default function ProfileCard({ setError }: ProfileCardProps) {
                                         : "bg-transparent border-transparent"
                                 }`}
                             />
+
                             {editing && (
                                 <motion.div
                                     className="text-gray-500 flex justify-end"
