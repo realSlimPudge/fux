@@ -5,8 +5,6 @@ import ProfileCard from "@/widgets/ProfileCard";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-//удалять старую аватарку из supabase
-
 export default function ProfilePage() {
     const [error, setError] = useState<string | null>(null);
     if (error) {

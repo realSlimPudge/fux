@@ -1,6 +1,8 @@
 import prisma from "@/prisma/client";
 import { authOptions } from "@/shared/lib/auth";
+import { validateContent } from "@/shared/lib/validateContent";
 import { getServerSession } from "next-auth";
+import { NextResponse } from "next/server";
 
 export async function POST(
     req: Request,
@@ -13,6 +15,14 @@ export async function POST(
 
     try {
         const body = await req.json();
+        const bioCheck = validateContent(body.bio);
+
+        if (!bioCheck.valid) {
+            return NextResponse.json(
+                { error: bioCheck.error },
+                { status: 400 }
+            );
+        }
 
         if (!checkId) {
             return new Response(
@@ -30,7 +40,7 @@ export async function POST(
         if (!checkLength) {
             return new Response(
                 JSON.stringify({
-                    error: "Bio must be less than 100 characters",
+                    error: "О себе должно содержать не более 100 символов",
                 }),
                 {
                     status: 400,

@@ -4,6 +4,7 @@ import Header from "@/shared/TheHeader/Header";
 import Providers from "./Providers";
 import { Nunito } from "next/font/google";
 import MobileNavBar from "@/widgets/MobileNavBar";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
     title: "FUX",
@@ -25,6 +26,7 @@ export default function RootLayout({
         <html lang="ru" className={openSans.className}>
             <body className="bg-gray-100 text-white ">
                 <Providers>
+                    <Toaster />
                     <Header />
                     <main>{children}</main>
                     <MobileNavBar />

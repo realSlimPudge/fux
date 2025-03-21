@@ -36,7 +36,7 @@ export default function ProfileGoalsList() {
         <>
             <ul className="space-y-10 w-full">
                 {isLoading
-                    ? Array(5)
+                    ? Array(2)
                           .fill(0)
                           .map((_, i) => <GoalCardSkeleton key={i} />)
                     : goals?.map((goal: Goal) => (
