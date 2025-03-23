@@ -16,14 +16,7 @@ export default function NavBar() {
             >
                 Главная
             </Link>
-            <Link
-                href="/about"
-                className={`${
-                    pathname === "/about" ? "active" : ""
-                } transition-all ease duration-200  h-full flex items-center rounded-lg px-2 border-transparent border-[1px] hover:border-gray-700`}
-            >
-                О нас
-            </Link>
+
             <Link
                 href="/social"
                 className={`${

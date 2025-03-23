@@ -4,6 +4,8 @@ import GoalCardSkeleton from "@/shared/skeletons/GoalCardSkeleton";
 import { Goal } from "@/shared/types/goal";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -80,19 +82,28 @@ export default function Social() {
                 </div>
 
                 {goals.length && (
-                    <div className="mx-auto px-4 py-2 shadow-md rounded-2xl bg-gray-300 text-gray-950 space-x-5">
+                    <div className="mx-auto  shadow-md rounded-2xl bg-gray-950 text-gray-50 space-x-5 font-bold">
                         <button
+                            className="bg-gray-950 px-3 py-2 text-base rounded-2xl disabled:opacity-50 ease transition-all duration-200
+                            hover:bg-gray-900
+                            "
                             onClick={() => {
                                 setPage((prev) => Math.max(prev - 1, 1));
                             }}
                             disabled={page === 1}
                         >
-                            Назад
+                            <NavigateBeforeIcon
+                                sx={{
+                                    color: "white",
+                                }}
+                            />
                         </button>
                         <span>
                             Страница {page} из {totalPages}
                         </span>
                         <button
+                            className="bg-gray-950 px-3 py-2 text-base rounded-2xl disabled:opacity-50 ease transition-all duration-200
+                            hover:bg-gray-900"
                             onClick={() => {
                                 setPage((prev) =>
                                     Math.min(prev + 1, totalPages)
@@ -100,7 +111,11 @@ export default function Social() {
                             }}
                             disabled={page === totalPages}
                         >
-                            Вперед
+                            <NavigateNextIcon
+                                sx={{
+                                    color: "white",
+                                }}
+                            />
                         </button>
                     </div>
                 )}

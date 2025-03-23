@@ -23,11 +23,13 @@ export default function GoalCard({ goal }: GoalCardProps) {
                             <span>Описание: </span> {goal.description}
                         </p>
                     </div>
-                    <div>
+                    <div className="sm:w-auto w-full">
                         {goal.user ? (
                             <UserMini goal={goal} />
                         ) : (
-                            <DeleteGoal id={goal.id} />
+                            <div className="w-full flex justify-end">
+                                <DeleteGoal id={goal.id} />
+                            </div>
                         )}
                     </div>
                 </div>

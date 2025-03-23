@@ -1,7 +1,7 @@
 "use client";
 
 import { Goal } from "@/shared/types/goal";
-import { Button } from "@mui/material";
+import { Button, Tooltip } from "@mui/material";
 import { useEffect, useState } from "react";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
@@ -82,37 +82,46 @@ export default function LikeButton({ goal }: LikeInterface) {
     });
 
     return (
-        <Button
-            onClick={toggleLike}
-            sx={{
-                padding: "0.25rem 1.25rem",
-                borderRadius: "0.75rem",
-                border: "1px #030712 solid",
-                color: isLiked ? "#f9f9f9" : "#030712",
-                display: "flex",
-                alignItems: "center",
-                transition: "300ms ease all",
-                backgroundColor: isLiked ? "#030712" : "#f9f9f9",
-            }}
-            startIcon={isLiked ? <ThumbUpAltIcon /> : <ThumbUpOffAltIcon />}
-            variant="outlined"
-            disabled={status === "unauthenticated"}
-            disableTouchRipple={isPosting}
+        <Tooltip
+            title={`${
+                status === "unauthenticated"
+                    ? "Авторизуйнтесь, чтобы поставить лайк"
+                    : ""
+            }`}
+            arrow
         >
-            <span className="mt-1 flex items-center">
-                {likeCount} {support}{" "}
-                {isPosting && (
-                    <CircularProgress
-                        thickness={5.5}
-                        size={20}
-                        sx={{
-                            marginLeft: "10px",
-                            marginTop: "-2px",
-                            color: isLiked ? "white" : "black",
-                        }}
-                    />
-                )}
-            </span>
-        </Button>
+            <Button
+                onClick={toggleLike}
+                sx={{
+                    padding: "0.25rem 1.25rem",
+                    borderRadius: "0.75rem",
+                    border: "1px #030712 solid",
+                    color: isLiked ? "#f9f9f9" : "#030712",
+                    display: "flex",
+                    alignItems: "center",
+                    transition: "300ms ease all",
+                    backgroundColor: isLiked ? "#030712" : "#f9f9f9",
+                }}
+                startIcon={isLiked ? <ThumbUpAltIcon /> : <ThumbUpOffAltIcon />}
+                variant="outlined"
+                disabled={status === "unauthenticated"}
+                disableTouchRipple={isPosting}
+            >
+                <span className="mt-1 flex items-center">
+                    {likeCount} {support}{" "}
+                    {isPosting && (
+                        <CircularProgress
+                            thickness={5.5}
+                            size={20}
+                            sx={{
+                                marginLeft: "10px",
+                                marginTop: "-2px",
+                                color: isLiked ? "white" : "black",
+                            }}
+                        />
+                    )}
+                </span>
+            </Button>
+        </Tooltip>
     );
 }

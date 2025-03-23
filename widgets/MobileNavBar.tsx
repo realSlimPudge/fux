@@ -32,7 +32,7 @@ export default function MobileNavBar() {
 
     return (
         <aside
-            className={`w-[90%] mx-auto h-[50px] shadow-md bg-gray-100 z-30 fixed left-[50%] transform bottom-[20px] translate-x-[-50%]
+            className={`w-[76%] mx-auto h-[45px] shadow-md bg-gray-100 z-30 fixed left-[50%] transform bottom-[20px] translate-x-[-50%]
          flex items-center border-gray-300 border-[1px] rounded-3xl transition-all ease-in-out duration-500 ${
              visible ? "translate-y-0" : "translate-y-[150%]"
          } `}
@@ -46,14 +46,7 @@ export default function MobileNavBar() {
                 >
                     Главная
                 </Link>
-                <Link
-                    href="/about"
-                    className={`${
-                        pathname === "/about" ? "active__mobile" : ""
-                    } transition-all ease duration-200  h-full flex items-center rounded-3xl px-3 border-transparent border-[1px] hover:border-gray-700`}
-                >
-                    О нас
-                </Link>
+
                 <Link
                     href="/social"
                     className={`${

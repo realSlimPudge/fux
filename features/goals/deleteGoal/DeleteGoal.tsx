@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { toast } from "sonner";
-
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 interface DeleteGoalProps {
     id: string;
 }
@@ -30,12 +30,19 @@ export default function DeleteGoal({ id: goalId }: DeleteGoalProps) {
 
     return (
         <button
+            className="transition-all duration-300 ease-in-out hover:bg-red-300
+        rounded-lg p-1
+        "
             onClick={() => {
                 deleteGoal();
             }}
             disabled={loading}
         >
-            {loading ? "Удаление..." : "Удалить"}
+            <DeleteOutlineOutlinedIcon
+                sx={{
+                    color: "#6b7280",
+                }}
+            />
         </button>
     );
 }
